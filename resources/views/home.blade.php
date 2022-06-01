@@ -28,6 +28,10 @@
                             <button type="submit" class="btn btn-primary">Save</button>
                         </div>
                     </form>
+                    <form method="post" action="{{ route('catalog.save') }}">
+                        @csrf
+                        <button type="submit" class="btn btn-primary">Import</button>
+                    </form>
                 </div>
             </div>
         </div>

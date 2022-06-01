@@ -20,6 +20,8 @@ class CreateShopsTable extends Migration
             $table->string('language');
             $table->string('currency');
             $table->string('timezone');
+            $table->integer('user_id')->unsigned();
+            $table->foreign('user_id')->references('id')->on('users');
             $table->timestamps();
         });
     }

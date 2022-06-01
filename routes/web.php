@@ -22,3 +22,5 @@ Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 
 Route::post('/shop/save', 'ShopController@save')->name('shop.save');
+
+Route::post('/catalogs/save', 'CatalogController@save')->name('catalog.save');

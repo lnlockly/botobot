@@ -3,6 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Telegram\Bot\Api;
+
+
+
 
 class HomeController extends Controller
 {
@@ -23,6 +27,7 @@ class HomeController extends Controller
      */
     public function index()
     {
+        $telegram = new Api('5413014855:AAGro9E47pyKJ6KefQiAvlogKObPNwSM7yo');
         return view('home');
     }
 }

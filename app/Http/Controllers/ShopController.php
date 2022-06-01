@@ -16,6 +16,7 @@ class ShopController extends Controller
     	$shop->language = "ru";
     	$shop->currency = "rub";
     	$shop->timezone = "+3";
+        $shop->user_id = auth()->user()->id;
 
     	$shop->save();
 
