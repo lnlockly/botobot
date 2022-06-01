@@ -4,8 +4,9 @@ namespace App\Imports;
 
 use App\Catalog;
 use Maatwebsite\Excel\Concerns\ToModel;
+use Maatwebsite\Excel\Concerns\WithStartRow;
 
-class CatalogsImport implements ToModel
+class CatalogsImport implements ToModel, WithStartRow
 {
     /**
     * @param array $row
@@ -32,5 +33,9 @@ class CatalogsImport implements ToModel
             'url' => $row[12],
             'shop_id' => $shop->id
         ]);
+    }
+    public function startRow(): int
+    {
+        return 2;
     }
 }
