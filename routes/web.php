@@ -19,12 +19,15 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::middleware('if_shop')->group(function () {
 
-Route::get('/test', 'ShopController@index')->name('shop.index');
+	Route::get('/home', 'HomeController@index')->name('home');
 
-Route::post('/shop/save', 'ShopController@save')->name('shop.save');
+	Route::get('/create', 'ShopController@index')->name('shop.create');
 
-Route::post('/catalogs/save', 'CatalogController@save')->name('catalog.save');
+	Route::post('/shop/save', 'ShopController@save')->name('shop.save');
 
-Route::post('/bot/{token}/webhook', 'ShopController@bot')->name('shop.bot');
+	Route::post('/catalogs/save', 'CatalogController@save')->name('catalog.save');
+
+	Route::post('/bot/{token}/webhook', 'ShopController@bot')->name('shop.bot');
+});
