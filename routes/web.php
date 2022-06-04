@@ -19,9 +19,9 @@ Route::get('/', function () {
 
 Route::get('/login', function() {
 	return view('auth.login');
-});
+})->name('login');
 
-Route::post('/auth', 'LoginController@handleTelegramCallback');
+Route::get('auth, 'LoginController@handleTelegramCallback');
 
 Route::middleware('if_shop')->group(function () {
 
