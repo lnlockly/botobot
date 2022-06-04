@@ -5,39 +5,36 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
-use Azate\LaravelTelegramLoginAuth\TelegramLoginAuth;
-use Illuminate\Http\Request;
 
 class LoginController extends Controller
 {
-      /**
-     * @var TelegramLoginAuth
-     */
-    protected $telegram;
+    /*
+    |--------------------------------------------------------------------------
+    | Login Controller
+    |--------------------------------------------------------------------------
+    |
+    | This controller handles authenticating users for the application and
+    | redirecting them to your home screen. The controller uses a trait
+    | to conveniently provide its functionality to your applications.
+    |
+    */
+
+    use AuthenticatesUsers;
 
     /**
-     * AuthController constructor.
+     * Where to redirect users after login.
      *
-     * @param TelegramLoginAuth $telegram
+     * @var string
      */
-    public function __construct(TelegramLoginAuth $telegram)
-    {
-        $this->telegram = $telegram;
-    }
+    protected $redirectTo = RouteServiceProvider::HOME;
 
     /**
-     * Get user info and log in (hypothetically)
+     * Create a new controller instance.
      *
-     * @return \Illuminate\Routing\Redirector|\Illuminate\Http\RedirectResponse
+     * @return void
      */
-    public function handleTelegramCallback()
+    public function __construct()
     {
-        if ($this->telegram->validate()) {
-            $user = $this->telegram->user();
-
-            //
-        }
-
-        return redirect('/');
+        $this->middleware('guest')->except('logout');
     }
 }

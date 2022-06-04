@@ -17,11 +17,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/login', function() {
-	return view('auth.login');
-})->name('login');
-
-Route::get('auth, 'LoginController@handleTelegramCallback');
+Auth::routes();
 
 Route::middleware('if_shop')->group(function () {
 
@@ -29,9 +25,13 @@ Route::middleware('if_shop')->group(function () {
 
 	Route::get('/create', 'ShopController@index')->name('shop.create');
 
+	Route::get('/catalog/create', 'CatalogController@create')->name('catalog.create');
+
 	Route::post('/shop/save', 'ShopController@save')->name('shop.save');
 
 	Route::post('/catalogs/save', 'CatalogController@save')->name('catalog.save');
+
+	Route::post('/catalogs/import', 'CatalogController@import')->name('catalog.import');
 
 	Route::post('/bot/{token}/webhook', 'ShopController@bot')->name('shop.bot');
 });

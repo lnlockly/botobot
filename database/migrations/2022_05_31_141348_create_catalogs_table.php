@@ -28,7 +28,7 @@ class CreateCatalogsTable extends Migration
             $table->string('price');
             $table->string('img')->nullable();
             $table->string('url')->nullable();
-            $table->unsignedBigInteger('shop_id');
+            $table->integer('shop_id')->unsigned();
             $table->foreign('shop_id')->references('id')->on('shops');
             $table->timestamps();
         });
