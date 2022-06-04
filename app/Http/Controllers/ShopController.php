@@ -23,11 +23,6 @@ class ShopController extends Controller
     	$shop->currency = "rub";
     	$shop->timezone = "+3";
         $shop->user_id = auth()->user()->id;
-     /*   $telegram = new Api($request->bot_token);
-
-
-        $response = $telegram->setWebhook(['url' => 'https://localhost/shop/' . $request->bot_token . '/webhook']);*/
-
     	$shop->save();
 
     	return redirect()->back();

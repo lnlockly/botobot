@@ -9,6 +9,15 @@ use App\Imports\CatalogsImport;
 
 class CatalogController extends Controller
 {
+
+	public function index() {
+		$shop = auth()->user()->shop;
+
+		$catalogs = Catalog::where('shop_id' => $shop->id);
+
+		return view('shop.catalog.statistic', ['catalogs' => $catalogs]);
+	}
+
 	public function create() {
 		return view('shop/catalog/create');
 	}
