@@ -31,8 +31,4 @@ class ShopController extends Controller
     	return redirect()->back();
     }
 
-    public function bot(Request $request) {
-        $updates = Telegram::getWebhookUpdates();
-        dd($updates);
-    }
 }
