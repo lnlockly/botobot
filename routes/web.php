@@ -21,6 +21,8 @@ Auth::routes();
 
 Route::post('/{token}/webhook', 'BotController@index');
 
+Route::get('/getUpdates', 'BotController@longpull');
+
 Route::middleware('if_shop')->group(function () {
 
 	Route::get('/home', 'HomeController@index')->name('home');

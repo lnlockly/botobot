@@ -13,7 +13,7 @@ class CatalogController extends Controller
 	public function index() {
 		$shop = auth()->user()->shop;
 
-		$catalogs = Catalog::where('shop_id' => $shop->id);
+		$catalogs = Catalog::where(['shop_id' => $shop->id]);
 
 		return view('shop.catalog.statistic', ['catalogs' => $catalogs]);
 	}
