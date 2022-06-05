@@ -19,6 +19,8 @@ Route::get('/', function () {
 
 Auth::routes();
 
+Route::post('/{token}/webhook', 'BotController@index');
+
 Route::middleware('if_shop')->group(function () {
 
 	Route::get('/home', 'HomeController@index')->name('home');
