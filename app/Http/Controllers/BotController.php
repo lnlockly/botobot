@@ -7,6 +7,7 @@ use Telegram\Bot\Keyboard\Keyboard;
 use Telegram\Bot\FileUpload\InputFile;
 use Telegram\Bot\Api;
 use App\Client;
+use App\User;
 
 class BotController extends Controller
 {
@@ -36,7 +37,12 @@ class BotController extends Controller
 
         $shop = auth()->user()->shop;
 
-        $client = $message->message->from;
+        if (isset($message->message->from)) {
+            $client = $message->message->from;
+        }
+        else {
+            $client = $message->callback_query->from;
+        }
 
         $this->checkClient($client, $shop->id);
         
@@ -138,7 +144,7 @@ class BotController extends Controller
 
     private function sendProducts($bot, $shop, $message, $chat_id) {
         $catalogs = $shop->catalogs;
-        $products = $catalogs->where('section1',ltrim($message, 's'))->groupBy('name')->keys();
+        $products = $catalogs->where('section1',ltrim($message, 's'))->pluck('name');
         $data = [];
         foreach ($products as $product) {
             array_push($data, [Keyboard::inlineButton(['callback_data'=> 'p'.$product,'text'=> $product])]);
@@ -156,18 +162,19 @@ class BotController extends Controller
         $catalogs = $shop->catalogs;
         $product = $catalogs->where('name', ltrim($message, 'p'))->first();
         
-        $data = [
+/*        $data = [
             [Keyboard::inlineButton(['callback_data'=> 'back','text'=> 'Вернуться'])]
         ];
 
         $keyboard = $this->makeInlineKeyboard($data);
-
-
+*/
+        $caption = $product->name. PHP_EOL .
+                   $product->description;
         $bot->sendPhoto([
           'chat_id' => $chat_id, 
           'photo' => InputFile::create('https://images.pexels.com/photos/2893685/pexels-photo-2893685.jpeg?cs=srgb&dl=pexels-oziel-g%C3%B3mez-2893685.jpg&fm=jpg'),
-          'caption' => $product->description,
-          'reply_markup' => $keyboard
+          'caption' => $caption,
+          // 'reply_markup' => $keyboard
         ]);
 
     }
@@ -188,5 +195,20 @@ class BotController extends Controller
 
             $new_client->save();
         }
+    }
+
+    public function mailing(Request $request) {
+        $users = User::all();
+
+        $bot = new Api('5252385740:AAHjvtk3NIaM_FRV_Tdv9eUmkL4OxbtqA-0');
+
+        foreach ($users as $user) {
+            $bot->sendMessage([
+              'chat_id' => $user->telegram_id, 
+              'text' => $request->text,
+            ]);
+        }
+
+        return redirect()->back();
     }
 }

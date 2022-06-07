@@ -16,11 +16,11 @@ class Access
     public function handle($request, Closure $next)
     {
         
-        if ( auth()->check() && auth()->user()->isAdmin == true )
+        if ( auth()->check() && auth()->user()->is_admin == true )
         {
             return $next($request);
         }
-        
+
         return redirect('/');
     }
 }
