@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Telegram\Bot\Keyboard\Keyboard;
+use Telegram\Bot\FileUpload\InputFile;
 use Telegram\Bot\Api;
+use App\Client;
 
 class BotController extends Controller
 {
@@ -30,10 +32,13 @@ class BotController extends Controller
 
         $response = $bot->getUpdates();
         
-
         $message = last($response);
 
         $shop = auth()->user()->shop;
+
+        $client = $message->message->from;
+
+        $this->checkClient($client, $shop->id);
         
         $this->checkMessage($bot, $shop, $message);
     }
@@ -50,9 +55,9 @@ class BotController extends Controller
 
 
     private function makeKeyboard() {
-      $data = [
-        ['Товары', 'Корзина'], ['Главное меню'],
-      ];
+        $data = [
+            ['Товары', 'Корзина'], ['Главное меню'],
+        ];
         $reply_markup = Keyboard::make([
             'keyboard' => $data, 
             'resize_keyboard' => true, 
@@ -88,14 +93,15 @@ class BotController extends Controller
     private function checkCallback($bot, $shop, $message) {
         $callback_query = $message->callback_query;
 
+
         $chat_id = $callback_query->message->chat->id;
 
 
-        if (strpos($callback_query->data, 's') == 0) {
+        if (strpos($callback_query->data, 's') === 0) {
             $this->sendProducts($bot, $shop, $message->callback_query->data, $chat_id);
         }
 
-        elseif (strpos($callback_query->data, 'p') == 0) {
+        elseif (strpos($callback_query->data, 'p') === 0) {
             $this->sendProduct($bot, $shop, $message->callback_query->data, $chat_id);
         }
     }
@@ -147,9 +153,40 @@ class BotController extends Controller
     }
 
     private function sendProduct($bot, $shop, $message, $chat_id){
+        $catalogs = $shop->catalogs;
+        $product = $catalogs->where('name', ltrim($message, 'p'))->first();
+        
+        $data = [
+            [Keyboard::inlineButton(['callback_data'=> 'back','text'=> 'Вернуться'])]
+        ];
+
+        $keyboard = $this->makeInlineKeyboard($data);
+
+
+        $bot->sendPhoto([
+          'chat_id' => $chat_id, 
+          'photo' => InputFile::create('https://images.pexels.com/photos/2893685/pexels-photo-2893685.jpeg?cs=srgb&dl=pexels-oziel-g%C3%B3mez-2893685.jpg&fm=jpg'),
+          'caption' => $product->description,
+          'reply_markup' => $keyboard
+        ]);
 
     }
-    private function sendMessage($bot, $shop, $chat_id) {
+    private function checkClient($client, $shop_id) {
+        $old_client = Client::where(['username' => $client->username])->first();
 
+        if ($old_client != null) {
+            $old_client->touch();
+        }
+        else {
+            $new_client = new Client;
+
+            $new_client->telegram_id = $client->id;
+            $new_client->first_name = $client->first_name;
+            $new_client->last_name = $client->last_name;
+            $new_client->username = $client->username;
+            $new_client->shop_id = $shop_id;
+
+            $new_client->save();
+        }
     }
 }

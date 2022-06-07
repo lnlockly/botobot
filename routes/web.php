@@ -35,6 +35,10 @@ Route::middleware('if_shop')->group(function () {
 
 	Route::get('/catalog/create', 'CatalogController@create')->name('catalog.create');
 
+	Route::get('/statistic/users', 'ClientController@index')->name('statistic.users');
+
+	Route::get('/statistic/orders', 'OrderController@index')->name('statistic.orders');
+
 	Route::post('/shop/save', 'ShopController@save')->name('shop.save');
 
 	Route::post('/catalogs/save', 'CatalogController@save')->name('catalog.save');
@@ -42,4 +46,12 @@ Route::middleware('if_shop')->group(function () {
 	Route::post('/catalogs/import', 'CatalogController@import')->name('catalog.import');
 
 	Route::post('/bot/{token}/webhook', 'ShopController@bot')->name('shop.bot');
+});
+
+Route::group(['prefix' => 'admin','as' => 'admin.', 'middleware' => 'is_admin'], function(){ 
+	Route::get('/users', 'AdminContoller@users')->name('users');
+	Route::get('/mailing', function () {
+		return view('admin.mailing');
+	});
+	Route::post('/mailing/save', 'AdminContoller@mailing')->name('mailing');
 });
