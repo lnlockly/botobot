@@ -15,18 +15,17 @@ class BotController extends Controller
 {
     public function index($token) {
         $message = Telegram::getWebhookUpdates();
-        dd($message);
 
         $bot = new Api($token);
 
         $shop = Shop::where(['bot_token' => $token])->get();
 
-        if (isset($message->message->from)) {
+        // if (isset($message->message->from)) {
             $client = $message->message->from;
-        }
-        else {
-            $client = $message->callback_query->from;
-        }
+        // }
+        // else {
+        //     $client = $message->callback_query->from;
+        // }
 
         $this->checkClient($client, $shop->id);
         
