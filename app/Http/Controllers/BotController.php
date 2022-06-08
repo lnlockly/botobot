@@ -7,6 +7,7 @@ use Telegram\Bot\Keyboard\Keyboard;
 use Telegram\Bot\FileUpload\InputFile;
 use Telegram\Bot\Api;
 use Telegram;
+use App\Shop;
 use App\Client;
 use App\User;
 
