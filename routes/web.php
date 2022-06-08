@@ -1,7 +1,6 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\Log;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,13 +16,7 @@ use Illuminate\Support\Facades\Log;
 
 Auth::routes();
 
-//Route::post('/{token}/webhook', 'BotController@index');
-
-Route::post('/{token}/webhook', function () {
-    $updates = Telegram::getWebhookUpdates();
-
-    Log::debug($updates);
-});
+Route::post('/{token}/webhook', 'BotController@index');
 
 
 Route::get('/getUpdates', 'BotController@longpull');
