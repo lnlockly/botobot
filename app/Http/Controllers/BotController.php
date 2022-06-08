@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Telegram\Bot\Keyboard\Keyboard;
 use Telegram\Bot\FileUpload\InputFile;
 use Telegram\Bot\Api;
+use Telegram;
 use App\Client;
 use App\User;
 
