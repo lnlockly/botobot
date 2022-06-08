@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Log;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,7 +22,7 @@ Auth::routes();
 Route::post('/{token}/webhook', function () {
     $updates = Telegram::getWebhookUpdates();
 
-    return 'ok';
+    Log::debug($updates);
 });
 
 
