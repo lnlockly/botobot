@@ -39,6 +39,7 @@ class BotController extends Controller
         
         $message = last($response);
 
+
         $shop = auth()->user()->shop;
 
         if (isset($message->message->from)) {

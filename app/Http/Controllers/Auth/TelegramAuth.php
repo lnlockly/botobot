@@ -11,16 +11,21 @@ class TelegramAuth extends Controller
 {
     public function callback(TelegramLoginAuth $telegramLoginAuth, Request $request) {
         if ($user = $telegramLoginAuth->validate($request)) {
-            $newuser = new User;
+            if (User::where(['telegram_chat_id' => $user->id]) != null){
+                Auth::login(User::where(['telegram_chat_id' => $user->id]));
+            }
+            else {
+                $newuser = new User;
 
-            $newuser->name('Test');
-            $newuser->email('email@email');
-            $newuser->password('123');
-            $newuser->telegram_id($user->id);
+                $newuser->name($user->first_name . ' ' . $user->last_name);
+                $newuser->username($user->username);
+                $newuser->telegram_chat_id($user->id);
 
-            $newuser->save();
+                $newuser->save();
 
-            return redirect()->back();
+                Auth::login($newuser);
+                return redirect()->back();
+            }
         }
 
     }
