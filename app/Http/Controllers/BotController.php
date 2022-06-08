@@ -18,10 +18,10 @@ class BotController extends Controller
    
         $bot = new Api($token);
 
-        $shop = Shop::where(['bot_token' => $token])->get();
+        $shop = Shop::where(['bot_token' => $token])->first();
 
-        if ($message->getMessage()->getChat() != null) {
-            $client = $message->getMessage()->getChat();
+        if (isset($message->message->from)) {
+            $client = $message->message->from;
         }
         else {
             $client = $message->callback_query->from;
@@ -36,7 +36,6 @@ class BotController extends Controller
         $bot = new Api('5252385740:AAHjvtk3NIaM_FRV_Tdv9eUmkL4OxbtqA-0');
 
         $response = $bot->getUpdates();
-       dd(Shop::where(['bot_token' => '5252385740:AAHjvtk3NIaM_FRV_Tdv9eUmkL4OxbtqA-0'])->get());
         
         $message = last($response);
 
