@@ -21,7 +21,7 @@ Route::post('/{token}/webhook', 'BotController@index');
 
 Route::get('/getUpdates', 'BotController@longpull');
 
-Route::get('/telegram/callback', 'TelegramAuth@callback');
+Route::get('/telegram/callback', 'Auth\TelegramAuth@callback');
 
 
 Route::middleware('if_shop')->group(function () {
