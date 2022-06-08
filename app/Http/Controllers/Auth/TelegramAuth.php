@@ -13,7 +13,7 @@ class TelegramAuth extends Controller
         if ($user = $telegramLoginAuth->validate($request)) {
             dd($user->get('id'));
             if (User::where(['telegram_id' => $user->get('id')]) != null){
-                Auth::login(User::where(['telegram_id' => $user[id]));
+                Auth::login(User::where(['telegram_id' => $user]));
             }
             else {
                 $newuser = new User;
