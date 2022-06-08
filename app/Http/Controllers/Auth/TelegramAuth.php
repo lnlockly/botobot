@@ -25,7 +25,7 @@ class TelegramAuth extends Controller
                 $newuser->save();
 
                 Auth::login($newuser);
-                return redirect()->back();
+                return redirect(route('shop.create'));
             }
         }
 
