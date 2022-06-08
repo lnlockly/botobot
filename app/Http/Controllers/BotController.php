@@ -14,11 +14,9 @@ use App\User;
 class BotController extends Controller
 {
     public function index($token) {
-        $updates = Telegram::getWebhookUpdates();
+        $message = Telegram::getWebhookUpdates();
 
         $bot = new Api($token);
-
-        $message = last($updates);
 
         $shop = Shop::where(['bot_token' => $token])->get();
 
