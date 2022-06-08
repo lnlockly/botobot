@@ -18,9 +18,9 @@ class TelegramAuth extends Controller
             else {
                 $newuser = new User;
 
-                $newuser->name($request->first_name . ' ' . $request->last_name);
-                $newuser->username($request->username);
-                $newuser->telegram_id($request->id);
+                $newuser->name = $request->first_name . ' ' . $request->last_name;
+                $newuser->username = $request->username;
+                $newuser->telegram_id =  $request->id;
 
                 $newuser->save();
 
