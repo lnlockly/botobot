@@ -9,9 +9,8 @@ use App\User;
 
 class TelegramAuth extends Controller
 {
-    public function callback(TelegramLoginAuth $telegramLoginAuth, Request $request) {
-         dd(1);
-        if ($user = $telegramLoginAuth->validate($request)) {
+    public function callback(TelegramLoginAuth $telegramLoginAuth) {
+        if ($user = $telegramLoginAuth->validate()) {
 
             if (User::where(['telegram_id' => $user->id]) != null){
                 Auth::login(User::where(['telegram_id' => $user->id]));
