@@ -16,7 +16,13 @@ use Illuminate\Support\Facades\Route;
 
 Auth::routes();
 
-Route::post('/{token}/webhook', 'BotController@index');
+//Route::post('/{token}/webhook', 'BotController@index');
+
+Route::post('/{token}/webhook', function () {
+    $updates = Telegram::getWebhookUpdates();
+
+    return 'ok';
+});
 
 
 Route::get('/getUpdates', 'BotController@longpull');
