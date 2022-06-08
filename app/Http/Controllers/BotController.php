@@ -16,12 +16,8 @@ class BotController extends Controller
     public function index($token) {
         $message = Telegram::getWebhookUpdates();
    
-
         $bot = new Api($token);
-     $bot->sendMessage([
-          'chat_id' => 1361064246, 
-          'text' => $message,
-        ]);
+
         $shop = Shop::where(['bot_token' => $token])->get();
 
         if (isset($message->message->from)) {
