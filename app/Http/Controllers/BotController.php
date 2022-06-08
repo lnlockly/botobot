@@ -130,7 +130,7 @@ class BotController extends Controller
     private function sendCatalogs($bot, $shop, $chat_id) {
         $catalogs = $shop->catalogs;
 
-        $sections = $catalogs->groupBy('section1')->keys();
+        $sections = $catalogs->pluck('section1');
         $data = [];
 
         foreach ($sections as $section) {
@@ -157,7 +157,7 @@ class BotController extends Controller
 
         $bot->sendMessage([
           'chat_id' => $chat_id, 
-          'text' => 'Выберите товары',
+          'text' => 'Выберите товар',
           'reply_markup' => $keyboard
         ]);
     }
