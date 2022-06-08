@@ -25,8 +25,8 @@ class ShopController extends Controller
         $shop->user_id = auth()->user()->id;
     	$shop->save();
 
-        /*$telegram = new Api($request->bot_token);
-        $telegram->setWebhook(['url' => 'https://151.248.121.198/'.$request->bot_token.'/webhook']);*/
+        $telegram = new Api($request->bot_token);
+        $telegram->setWebhook(['url' => 'https://chipbot.ru/'.$request->bot_token.'/webhook']);
 
     	return redirect()->back();
     }

@@ -11,21 +11,25 @@ use App\User;
 
 class BotController extends Controller
 {
-
-
-    public function index() {
+    public function index($token) {
         $updates = Telegram::getWebhookUpdates();
 
-        $telegram = new Api('5252385740:AAHjvtk3NIaM_FRV_Tdv9eUmkL4OxbtqA-0');
+        $bot = new Api($token);
 
+        $message = last($updates);
 
-        $response = $telegram->sendMessage([
+        $shop = Shop::where(['bot_token' => $token])->get();
 
-          'chat_id' => $updates->message->sender_chat->id, 
+        if (isset($message->message->from)) {
+            $client = $message->message->from;
+        }
+        else {
+            $client = $message->callback_query->from;
+        }
 
-          'text' => 'Hello World'
-
-        ]);
+        $this->checkClient($client, $shop->id);
+        
+        $this->checkMessage($bot, $shop, $message);
     }
 
     public function longpull() {
@@ -172,7 +176,7 @@ class BotController extends Controller
                    $product->description;
         $bot->sendPhoto([
           'chat_id' => $chat_id, 
-          'photo' => InputFile::create('https://images.pexels.com/photos/2893685/pexels-photo-2893685.jpeg?cs=srgb&dl=pexels-oziel-g%C3%B3mez-2893685.jpg&fm=jpg'),
+          'photo' => InputFile::create($product->img),
           'caption' => $caption,
           // 'reply_markup' => $keyboard
         ]);
