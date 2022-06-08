@@ -20,7 +20,7 @@ class BotController extends Controller
 
         $shop = Shop::where(['bot_token' => $token])->get();
 
-        if (isset($message->getMessage()->getChat())) {
+        if ($message->getMessage()->getChat() != null) {
             $client = $message->getMessage()->getChat();
         }
         else {
