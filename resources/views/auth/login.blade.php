@@ -10,7 +10,7 @@
                     async src="https://telegram.org/js/telegram-widget.js?19"
                     data-telegram-login="chipboto_bot"
                     data-size="large"
-                    data-auth-url="http://151.248.121.198/telegram/callback" 
+                    data-auth-url="https://chipbot.ru/telegram/callback" 
                     data-request-access="write">
                     </script>
                 </div>
