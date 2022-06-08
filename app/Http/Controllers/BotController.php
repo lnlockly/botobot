@@ -36,6 +36,7 @@ class BotController extends Controller
         $bot = new Api('5252385740:AAHjvtk3NIaM_FRV_Tdv9eUmkL4OxbtqA-0');
 
         $response = $bot->getUpdates();
+       dd(Shop::where(['bot_token' => '5252385740:AAHjvtk3NIaM_FRV_Tdv9eUmkL4OxbtqA-0'])->get());
         
         $message = last($response);
 
