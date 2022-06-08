@@ -15,6 +15,7 @@ class BotController extends Controller
 {
     public function index($token) {
         $message = Telegram::getWebhookUpdates();
+        dd($message);
 
         $bot = new Api($token);
 
