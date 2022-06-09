@@ -11,9 +11,9 @@
                     <label for="text" class="col-sm-3 col-form-label">Текст сообщения</label>
                     <div class="col-sm-9">
                         <textarea class="form-control" name="text"
-                         value="<a href='vk.com'>Ссылка на сайт</a><br>
-                            <p>Строка</p>"><a href='vk.com'>Ссылка на сайт</a><br>
-                            <p>Строка</p>
+                         value="<a href='vk.com'>Ссылка на сайт</a>
+                            Строка"><a href='vk.com'>Ссылка на сайт</a>
+                            Строка<
                         </textarea>
                     </div>
                 </div>
