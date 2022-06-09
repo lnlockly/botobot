@@ -10,7 +10,11 @@
                 <div class="form-group row">
                     <label for="text" class="col-sm-3 col-form-label">Текст сообщения</label>
                     <div class="col-sm-9">
-                        <input type="text" class="form-control" name="text" id="text">
+                        <textarea class="form-control" name="text"
+                         value="<a href='vk.com'>Ссылка на сайт</a>
+                            Строка"><a href='vk.com'>Ссылка на сайт</a>
+                            Строка<
+                        </textarea>
                     </div>
                 </div>
                 <button type="submit" class="btn btn-primary me-2">Submit</button>
