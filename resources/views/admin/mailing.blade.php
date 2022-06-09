@@ -12,7 +12,8 @@
                     <div class="col-sm-9">
                         <textarea class="form-control" name="text"
                          value="<a href='vk.com'>Ссылка на сайт</a><br>
-                            <p>Строка</p>">
+                            <p>Строка</p>"><a href='vk.com'>Ссылка на сайт</a><br>
+                            <p>Строка</p>
                         </textarea>
                     </div>
                 </div>
