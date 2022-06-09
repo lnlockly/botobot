@@ -13,7 +13,7 @@
                         <textarea class="form-control" name="text"
                          value="<a href='vk.com'>Ссылка на сайт</a>
                             Строка"><a href='vk.com'>Ссылка на сайт</a>
-                            Строка<
+                            Строка
                         </textarea>
                     </div>
                 </div>
