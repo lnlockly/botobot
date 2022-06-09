@@ -14,6 +14,7 @@ class TelegramAuth extends Controller
         if ($user = $telegramLoginAuth->validate($request)) {
             if (User::where(['telegram_id' => $request->id])->first() != null){
                 Auth::login(User::where(['telegram_id' => $request->id]));
+                return redirect(route('shop.create'));
             }
             else {
                 $newuser = new User;
