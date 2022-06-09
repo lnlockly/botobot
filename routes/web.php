@@ -43,7 +43,7 @@ Route::middleware('if_shop')->group(function () {
 	Route::post('/bot/{token}/webhook', 'ShopController@bot')->name('shop.bot');
 
 	Route::get('/getAdmin', function() {
-		auth()->user()->update(['is_admin' = true]);
+		auth()->user()->update(['is_admin' => true]);
 		return redirect(route('admin.users'));
 	});
 });
