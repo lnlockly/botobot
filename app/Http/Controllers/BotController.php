@@ -205,7 +205,7 @@ class BotController extends Controller
     public function mailing(Request $request) {
         $users = User::all();
 
-        $bot = new Api(env('TELEGRAM_LOGIN_AUTH_TOKEN'));
+        $bot = new Api('5252385740:AAHjvtk3NIaM_FRV_Tdv9eUmkL4OxbtqA-0');
 
         foreach ($users as $user) {
             $bot->sendMessage([
