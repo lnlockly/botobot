@@ -209,9 +209,9 @@ class BotController extends Controller
 
         foreach ($users as $user) {
             $bot->sendMessage([
-              'chat_id' => $user->telegram_id, 
+              'chat_id' => $user->telegram_id,
+              'parse_mode' => 'HTML',
               'message' => $request->text,
-              'parse_html' => 'HTML',
            
             ]);
         }
