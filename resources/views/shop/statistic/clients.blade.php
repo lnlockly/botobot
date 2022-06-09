@@ -29,7 +29,7 @@
             @foreach ($clients as $client)
             <tr>
               <td>
-                {{ $client->client_id }}
+                {{ $client->telegram_id }}
               </td>
               <td>
                 {{ $client->first_name }}  {{ $client->last_name }}
