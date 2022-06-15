@@ -233,7 +233,13 @@ class BotController extends Controller
 
         switch ($callback) {
             case 'delete':
-                Cart::where('catalog_id', $callback_message)->delete();
+                if($count > 1) {
+                    Cart::where('catalog_id', $callback_message)->delete();
+                }
+                else {
+                    Cart::where('catalog_id', $callback_message)->delete();
+                    $this->sendStartMessage($bot, $shop, $chat_id);
+                }
                 $callback_message = 0;
                 if ($count > $callback_message + 1) {
                     $next = $callback_message + 1;
