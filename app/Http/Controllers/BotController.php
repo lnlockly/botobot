@@ -415,6 +415,7 @@ class BotController extends Controller
                 'chat_id' => $chat_id,
                 'text' => 'Корзина пуста.',
             ]);
+            return;
         }
         else {
             $product = Catalog::where(['id' => $cart[0]->catalog_id])->first();
