@@ -238,7 +238,7 @@ class BotController extends Controller
                 }
                 else {
                     Cart::where('catalog_id', $callback_message)->delete();
-                    $this->sendStartMessage($bot, $shop, $chat_id);
+                    $this->sendCatalogs($bot, $shop, $chat_id);
                 }
                 $callback_message = 0;
                 if ($count > $callback_message + 1) {
