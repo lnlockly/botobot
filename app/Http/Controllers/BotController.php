@@ -20,13 +20,11 @@ class BotController extends Controller
         $message = Telegram::getWebhookUpdates();
 
         $bot = new Api($token);
-
-        $message = last($message);
-
+        
         $shop = Shop::where(['bot_token' => $token])->first();
 
         if ($message['message'] != null) {
-            $client = $message['message']['chat'];
+            $client = $message->getMessage()->getChat();
         } else {
             $client = $message['callback_query']['from'];
         }
