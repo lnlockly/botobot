@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
 use App\User;
 
 /*
@@ -23,6 +24,10 @@ Route::post('/{token}/webhook', 'BotController@index');
 Route::get('/getUpdates', 'BotController@longpull');
 
 Route::get('/telegram/callback', 'Auth\TelegramAuth@callback');
+
+Route::get('/test', function() {
+	Auth::login(User::where(['id' => 2])->first());
+});
 
 
 Route::middleware('if_shop')->group(function () {
