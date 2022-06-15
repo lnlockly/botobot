@@ -233,6 +233,34 @@ class BotController extends Controller
 
         switch ($callback) {
             case 'delete':
+                Cart::where('catalog_id', $callback_message)->delete();
+                $callback_message = 0;
+                if ($count > $callback_message + 1) {
+                    $next = $callback_message + 1;
+                    $back = $callback_message - 1;
+
+                }
+                if ($callback_message == 0) {
+                    $back = $count - 1;
+                } else {
+                    $next = 0;
+                    $back = $callback_message - 1;
+                }
+                $product = Catalog::where(['id' => $cart[$callback_message]->catalog_id])->first();
+
+                $keyboard = $this->makeKeyboardForCart($product->id, $back, $next, $callback_message);
+
+                $text = "<a href='" . $product->img . "'>" . $product->name . "</a>" . "\n" .
+                $product->description . "\n" .
+                $product->url;
+
+                $bot->editMessageText([
+                    'chat_id' => $chat_id,
+                    'message_id' => $message_id,
+                    'parse_mode' => 'HTML',
+                    'text' => $text,
+                    'reply_markup' => $keyboard,
+                ]);
                 break;
 
             case 'count':
