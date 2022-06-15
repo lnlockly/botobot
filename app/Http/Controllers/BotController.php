@@ -194,16 +194,16 @@ class BotController extends Controller
 
         $keyboard = $this->makeInlineKeyboard($data);
 
-        $caption = $product->name . PHP_EOL .
-        $product->description . PHP_EOL .
-        $product->url. PHP_EOL . 
-        'Цена:'. $product->price;
+        $text = "<a href='" . $product->img . "'>" . $product->name . "</a>" . "\n" .
+        $product->description . "\n" .
+        $product->url. "\n" .
+        'Цена:' . $product->price;
 
-        $bot->sendPhoto([
+        $bot->sendMessage([
             'chat_id' => $chat_id,
-            'photo' => InputFile::create($product->img),
-            'caption' => $caption,
-            'reply_markup' => $keyboard,
+            'parse_mode' => 'HTML',
+            'text' => $text,
+            'reply_markup' => $keyboard
         ]);
 
     }
