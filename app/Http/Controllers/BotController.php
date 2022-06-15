@@ -196,7 +196,8 @@ class BotController extends Controller
 
         $caption = $product->name . PHP_EOL .
         $product->description . PHP_EOL .
-        $product->url;
+        $product->url. PHP_EOL . 
+        'Цена:'. $product->price;
 
         $bot->sendPhoto([
             'chat_id' => $chat_id,
@@ -288,7 +289,8 @@ class BotController extends Controller
 
                 $text = "<a href='" . $product->img . "'>" . $product->name . "</a>" . "\n" .
                 $product->description . "\n" .
-                $product->url;
+                $product->url. "\n" .
+                'Цена:' . $product->price;
 
                 $bot->editMessageText([
                     'chat_id' => $chat_id,
@@ -322,7 +324,8 @@ class BotController extends Controller
 
                 $text = "<a href='" . $product->img . "'>" . $product->name . "</a>" . "\n" .
                 $product->description . "\n" .
-                $product->url;
+                $product->url. "\n" .
+                'Цена:' . $product->price;
 
                 $bot->editMessageText([
                     'chat_id' => $chat_id,
@@ -354,7 +357,8 @@ class BotController extends Controller
 
                 $text = "<a href='" . $product->img . "'>" . $product->name . "</a>" . "\n" .
                 $product->description . "\n" .
-                $product->url;
+                $product->url. "\n" .
+                'Цена:' . $product->price;
 
                 $bot->editMessageText([
                     'chat_id' => $chat_id,
@@ -434,7 +438,8 @@ class BotController extends Controller
 
         $text = "<a href='" . $product->img . "'>" . $product->name . "</a>" . "\n" .
         $product->description . "\n" .
-        $product->url;
+        $product->url. "\n" .
+        'Цена:' . $product->price;
 
         $bot->sendMessage([
             'chat_id' => $chat_id,
