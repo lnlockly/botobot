@@ -410,7 +410,15 @@ class BotController extends Controller
             $next = 0;
             $back = 0;
         }
-        $product = Catalog::where(['id' => $cart[0]->catalog_id])->first();
+        if($count < 1) { 
+            $bot->sendMessage([
+                'chat_id' => $chat_id,
+                'text' => 'Корзина пуста.',
+            ]);
+        }
+        else {
+            $product = Catalog::where(['id' => $cart[0]->catalog_id])->first();
+        }
         $data = [
             [Keyboard::inlineButton(['callback_data' => 'delete' . $product->id, 'text' => '❌']),
                 Keyboard::inlineButton(['callback_data' => 'uncount' . $product->id, 'text' => '🔻']),
