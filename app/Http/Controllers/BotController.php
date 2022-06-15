@@ -21,9 +21,11 @@ class BotController extends Controller
 
         $bot = new Api($token);
 
+        $message = last($message);
+
         $shop = Shop::where(['bot_token' => $token])->first();
 
-        if ($message['message']['chat'] != null) {
+        if ($message['message'] != null) {
             $client = $message['message']['chat'];
         } else {
             $client = $message['callback_query']['from'];
