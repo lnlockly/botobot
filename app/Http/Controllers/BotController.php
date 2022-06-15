@@ -23,13 +23,13 @@ class BotController extends Controller
         
         $shop = Shop::where(['bot_token' => $token])->first();
 
-        if ($message['message'] != null) {
+        if ($message->getMessage() != null) {
             $client = $message->getMessage()->getChat();
         } else {
             $client = $message['callback_query']['from'];
         }
 
-        $this->checkClient($client, $shop['id']);
+        $this->checkClient($client, $shop->id);
 
         $this->checkMessage($bot, $shop, $message);
     }
@@ -400,7 +400,10 @@ class BotController extends Controller
             $next = 1;
             $back = 0;
         }
-
+        else {
+            $next = 0;
+            $back = 0;
+        }
         $product = Catalog::where(['id' => $cart[0]->catalog_id])->first();
         $data = [
             [Keyboard::inlineButton(['callback_data' => 'delete' . $product->id, 'text' => '❌']),
