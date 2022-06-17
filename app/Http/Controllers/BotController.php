@@ -20,6 +20,8 @@ class BotController extends Controller
         $message = Telegram::getWebhookUpdates();
 
         $bot = new Api($token);
+
+        $message = last($message);
         
         $shop = Shop::where(['bot_token' => $token])->first();
 
@@ -36,16 +38,17 @@ class BotController extends Controller
 
     public function longpull()
     {
-        $bot = new Api('5485216336:AAFYZxAlRoGYeGXoBdfw6U2TVmjCQnpVIcM');
+        $bot = new Api('5335064147:AAExa_KxUb0pr3uJxYBSdJu4QDekx7w37SM');
 
         $response = $bot->getUpdates();
 
         $message = last($response);
 
+
         $shop = auth()->user()->shop;
 
-        if ($message->message != null) {
-            $client = $message['message']['chat'];
+        if ($message->getMessage() != null) {
+            $client = $message->getMessage()->getChat();
         } else {
             $client = $message->callback_query->from;
         }
@@ -66,11 +69,8 @@ class BotController extends Controller
         return $reply_markup;
     }
 
-    private function makeKeyboard()
+    private function makeKeyboard($data)
     {
-        $data = [
-            ['Товары', 'Корзина'], ['Главное меню'],
-        ];
         $reply_markup = Keyboard::make([
             'keyboard' => $data,
             'resize_keyboard' => true,
@@ -86,15 +86,20 @@ class BotController extends Controller
             $this->checkCallback($bot, $shop, $message);
         } elseif ($message->message != null) {
             $client = $message['message']['chat'];
-
+            $client_db = Client::where('username', $client['username'])->first();
+           
             $message_text = $message->message->text;
             $chat_id = $message->message->chat->id;
+
+            if ($client_db != null && $client_db->session_id != null) {
+                $this->updateClient($bot, $shop, $client_db, $chat_id, $message_text);
+            }
             switch ($message_text) {
-                case 'Товары':
-                    $this->sendCatalogs($bot, $shop, $chat_id);
-                    break;
                 case '/start':
                     $this->sendStartMessage($bot, $shop, $chat_id);
+                    break;
+                case 'Товары':
+                    $this->sendCatalogs($bot, $shop, $chat_id);
                     break;
                 case 'Главное меню':
                     $this->sendStartMessage($bot, $shop, $chat_id);
@@ -102,10 +107,30 @@ class BotController extends Controller
                 case 'Корзина':
                     $this->sendCart($bot, $shop, $client, $chat_id);
                     break;
+                case 'Настройки':
+                    $this->sendSettings($bot, $shop, $chat_id);
+                    break;
+
+                case 'Имя':
+                    $this->updateClient();
+                    break;
+                case 'Телефон':
+                    $this->updateClient();
+                    break;
+                case 'Адрес':
+                    $this->updateClient();
+                    break;
             }
         }
     }
+    private function updateClient($bot, $shop, $client, $chat_id, $update_message){
+        $update_field = $client->session_id;
+        $new_user = false;
+        if ($update_field = ['phone', 'address', 'delivery']) {
+            $new_user = true;
+        }
 
+    }
     private function checkCallback($bot, $shop, $message)
     {
         $callback_query = $message->callback_query;
@@ -132,16 +157,34 @@ class BotController extends Controller
             $this->updateCart($bot, $shop, $client, $chat_id, 'count', ltrim($callback_query->data, 'count'), $message_id);
         } elseif (strpos($callback_query->data, 'delete') === 0) {
             $this->updateCart($bot, $shop, $client, $chat_id, 'delete', ltrim($callback_query->data, 'delete'), $message_id);
+        } elseif (strpos($callback_query->data, 'newOrder') === 0) {
+            $this->newOrder($bot, $shop, $client, $chat_id);
         }
     }
 
     private function sendStartMessage($bot, $shop, $chat_id)
     {
-        $keyboard = $this->makeKeyboard();
+        $data = [
+            ['Товары', 'Корзина'], ['Главное меню'], ['Настройки'],
+        ];
+        $keyboard = $this->makeKeyboard($data);
 
         $bot->sendMessage([
             'chat_id' => $chat_id,
             'text' => 'Добро пожаловать!',
+            'reply_markup' => $keyboard,
+        ]);
+    }
+
+    private function sendSettings($bot, $shop, $chat_id) {
+        $data = [
+            ['Имя', 'Телефон'], ['Адрес'], ['Главное меню'],
+        ];
+        $keyboard = $this->makeKeyboard($data);
+
+        $bot->sendMessage([
+            'chat_id' => $chat_id,
+            'text' => 'Настройки',
             'reply_markup' => $keyboard,
         ]);
     }
@@ -218,6 +261,7 @@ class BotController extends Controller
             [Keyboard::inlineButton(['callback_data' => 'back' . $back, 'text' => '◀️']),
                 Keyboard::inlineButton(['callback_data' => '1', 'text' => $callback_message + 1 . '/' . $cart->count()]),
                 Keyboard::inlineButton(['callback_data' => 'next' . $next, 'text' => '▶️'])],
+                [Keyboard::inlineButton(['callback_data' => 'newOrder' . $next, 'text' => 'Заказать товары'])]
         ];
 
         $keyboard = $this->makeInlineKeyboard($data);
@@ -481,7 +525,7 @@ class BotController extends Controller
 
     private function checkClient($client, $shop_id)
     {
-        $old_client = Client::where(['username' => $client['username']])->first();
+        $old_client = Client::where('username', $client['username'])->first();
 
         if ($old_client != null) {
             $old_client->touch();
@@ -495,6 +539,14 @@ class BotController extends Controller
             $new_client->shop_id = $shop_id;
 
             $new_client->save();
+        }
+    }
+
+    private function newOrder($bot, $shop, $client, $chat_id) {
+        $client = Client::where('username', $client['username'])->first();
+
+        if ($client->phone == null || $client->address == null ) {
+            $this->updateClient($bot, $shop, $client, $chat_id, ['phone', 'address', 'delivery'], null);
         }
     }
 
