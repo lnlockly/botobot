@@ -110,24 +110,116 @@ class BotController extends Controller
                 case 'Настройки':
                     $this->sendSettings($bot, $shop, $chat_id);
                     break;
-
                 case 'Имя':
-                    $this->updateClient();
+                    $this->sendName($bot, $client_db, $chat_id);
                     break;
                 case 'Телефон':
-                    $this->updateClient();
+                    $this->sendPhone($bot, $client_db, $chat_id);
                     break;
                 case 'Адрес':
-                    $this->updateClient();
+                    $this->sendAddress($bot, $client_db, $chat_id);
+                    break;
+                case 'Доставка':
+                    $this->sendDelivery($bot, $client_db, $chat_id);
                     break;
             }
         }
     }
+
+    private function sendName($bot, $client, $chat_id) {
+        $data = [];
+        $reply_markup = $this->makeKeyboard($data);
+
+        $client->update(['session_id' => 'first_name']);
+        $bot->sendMessage([
+            'chat_id' => $chat_id,
+            'text' => 'Введите имя:',
+            'reply_markup' => $reply_markup
+        ]);
+    }
+
+    private function sendPhone($bot, $client, $chat_id) {
+        $data = [];
+        $reply_markup = $this->makeKeyboard($data);
+
+        $client->update(['session_id' => 'phone']);
+        $bot->sendMessage([
+            'chat_id' => $chat_id,
+            'text' => 'Введите телефон:',
+            'reply_markup' => $reply_markup
+        ]);
+    }
+
+    private function sendAddress($bot, $client, $chat_id) {
+        $data = [];
+        $reply_markup = $this->makeKeyboard($data);
+
+        $client->update(['session_id' => 'address']);
+        $bot->sendMessage([
+            'chat_id' => $chat_id,
+            'text' => 'Введите адрес:',
+            'reply_markup' => $reply_markup
+        ]);
+    }
+
+    private function sendDelivery($bot, $client, $chat_id) {
+        $data = [['Заберу сам'], ['Доставить по адресу']];
+
+        $client->update(['session_id' => 'delivery']);
+        $bot->sendMessage([
+            'chat_id' => $chat_id,
+            'text' => 'Введите адрес:',
+            'reply_markup' => $reply_markup
+        ]);
+    }
     private function updateClient($bot, $shop, $client, $chat_id, $update_message){
         $update_field = $client->session_id;
-        $new_user = false;
-        if ($update_field = ['phone', 'address', 'delivery']) {
-            $new_user = true;
+
+        if ($update_message == 'all') {
+            $next = true;
+        }
+        else {
+            $client->update([$update_field => $update_message]);
+        }
+
+        $client->update(['session_id' => null]);
+        
+        switch ($update_field) {
+            case 'first_name':
+                $success_message = "Имя обновлено";
+                break;
+            
+            case 'phone':
+                $success_message = "Телефон обновлен.";
+                break;
+
+            case 'address':
+                $success_message = "Адрес обновлен.";
+                break;
+
+            case 'delivery':
+                $success_message = "";
+                break;
+        }
+        $bot->sendMessage([
+            'chat_id' => $chat_id,
+            'text' => $success_message,
+        ]);
+
+        if ($next == true) {
+            switch ($update_field) {
+                case 'first_name':
+                    $this->sendPhone($bot, $client, $chat_id);
+                    break;
+                
+                case 'phone':
+                    $this->sendAddress($bot, $client, $chat_id);
+                    break;
+
+                case 'address':
+                    $this->sendDelivery($bot, $client, $chat_id);
+                    break;
+            }
         }
 
     }
@@ -186,6 +278,7 @@ class BotController extends Controller
             'chat_id' => $chat_id,
             'text' => 'Настройки',
             'reply_markup' => $keyboard,
+            'one_time_keyboard' => true
         ]);
     }
 
@@ -546,7 +639,7 @@ class BotController extends Controller
         $client = Client::where('username', $client['username'])->first();
 
         if ($client->phone == null || $client->address == null ) {
-            $this->updateClient($bot, $shop, $client, $chat_id, ['phone', 'address', 'delivery'], null);
+            $this->updateClient($bot, $shop, $client, $chat_id, 'all');
         }
     }
 

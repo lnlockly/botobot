@@ -21,6 +21,7 @@ class CreateClientsTable extends Migration
             $table->string('username');
             $table->string('phone')->nullable();
             $table->string('address')->nullable();
+            $table->string('delivery')->nullable();
             $table->unsignedBigInteger('shop_id');
             $table->string('session_id');
             $table->foreign('shop_id')->references('id')->on('shops');
