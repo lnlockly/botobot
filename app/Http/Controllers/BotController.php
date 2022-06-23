@@ -26,12 +26,12 @@ class BotController extends Controller
 
         Log::info($token);
         
-        $shop = Shop::firstWhere('bot_token', '5451416059:AAEdKASU3cksZ67ra6eR6ZRIFgjiFb9xWVk');
+        $shop = Shop::firstWhere('bot_token', $token);
 
         Log::info($shop);
 
         if ($message['message'] != null) {
-            $client = $message['message']['from'];
+            $client = $message['message']['chat'];
         } else {
             $client = $message['callback_query']['from'];
         }

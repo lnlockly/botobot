@@ -24,7 +24,7 @@ class ShopController extends Controller
     	$shop->timezone = "+3";
         $shop->user_id = auth()->user()->id;
     	$shop->save();
-
+        
         $telegram = new Api($request->bot_token);
         $telegram->setWebhook(['url' => 'https://chipbot.ru/'.$request->bot_token.'/webhook']);
 
