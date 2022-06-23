@@ -498,9 +498,12 @@ class BotController extends Controller
 
             $new_client->telegram_id = $client['id'];
             $new_client->first_name = $client['first_name'];
-            $new_client->last_name = $client['last_name'];
+            if (isset($client['last_name'])) {
+                $new_client->last_name = $client['last_name'];
+            }
             $new_client->username = $client['username'];
             $new_client->shop_id = $shop_id;
+            $new_client->session_id = "1";
 
             $new_client->save();
         }
