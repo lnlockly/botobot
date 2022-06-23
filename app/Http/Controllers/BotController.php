@@ -7,10 +7,10 @@ use App\Catalog;
 use App\Client;
 use App\Shop;
 use App\User;
+use App\Order;
 use Illuminate\Http\Request;
 use Telegram;
 use Telegram\Bot\Api;
-use Telegram\Bot\FileUpload\InputFile;
 use Telegram\Bot\Keyboard\Keyboard;
 
 class BotController extends Controller
@@ -22,7 +22,7 @@ class BotController extends Controller
         $bot = new Api($token);
 
         $message = last($message);
-        
+
         $shop = Shop::where(['bot_token' => $token])->first();
 
         if ($message->getMessage() != null) {
@@ -38,14 +38,13 @@ class BotController extends Controller
 
     public function longpull()
     {
-        $bot = new Api('5335064147:AAExa_KxUb0pr3uJxYBSdJu4QDekx7w37SM');
+        $shop = auth()->user()->shop;
+
+        $bot = new Api($shop->bot_token);
 
         $response = $bot->getUpdates();
 
         $message = last($response);
-
-
-        $shop = auth()->user()->shop;
 
         if ($message->getMessage() != null) {
             $client = $message->getMessage()->getChat();
@@ -87,7 +86,7 @@ class BotController extends Controller
         } elseif ($message->message != null) {
             $client = $message['message']['chat'];
             $client_db = Client::where('username', $client['username'])->first();
-           
+
             $message_text = $message->message->text;
             $chat_id = $message->message->chat->id;
 
@@ -126,100 +125,131 @@ class BotController extends Controller
         }
     }
 
-    private function sendName($bot, $client, $chat_id) {
+    private function sendName($bot, $client, $chat_id, $next)
+    {
         $data = [];
         $reply_markup = $this->makeKeyboard($data);
-
-        $client->update(['session_id' => 'first_name']);
+        if ($next) {
+            $client->update(['session_id' => 'all_first_name']);
+        } else {
+            $client->update(['session_id' => 'first_name']);
+        }
         $bot->sendMessage([
             'chat_id' => $chat_id,
             'text' => 'Введите имя:',
-            'reply_markup' => $reply_markup
+            'reply_markup' => $reply_markup,
         ]);
     }
 
-    private function sendPhone($bot, $client, $chat_id) {
+    private function sendPhone($bot, $client, $chat_id, $next)
+    {
         $data = [];
         $reply_markup = $this->makeKeyboard($data);
-
-        $client->update(['session_id' => 'phone']);
+        if ($next) {
+            $client->update(['session_id' => 'all_phone']);
+        } else {
+            $client->update(['session_id' => 'phone']);
+        }
         $bot->sendMessage([
             'chat_id' => $chat_id,
             'text' => 'Введите телефон:',
-            'reply_markup' => $reply_markup
+            'reply_markup' => $reply_markup,
         ]);
     }
 
-    private function sendAddress($bot, $client, $chat_id) {
+    private function sendAddress($bot, $client, $chat_id, $next)
+    {
         $data = [];
         $reply_markup = $this->makeKeyboard($data);
-
-        $client->update(['session_id' => 'address']);
+        if ($next) {
+            $client->update(['session_id' => 'all_address']);
+        } else {
+            $client->update(['session_id' => 'address']);
+        }
         $bot->sendMessage([
             'chat_id' => $chat_id,
             'text' => 'Введите адрес:',
-            'reply_markup' => $reply_markup
+            'reply_markup' => $reply_markup,
         ]);
     }
 
-    private function sendDelivery($bot, $client, $chat_id) {
+    private function sendDelivery($bot, $client, $chat_id, $next)
+    {
         $data = [['Заберу сам'], ['Доставить по адресу']];
+        $reply_markup = $this->makeKeyboard($data);
 
-        $client->update(['session_id' => 'delivery']);
+        if ($next) {
+            $client->update(['session_id' => 'all_delivery']);
+        } else {
+            $client->update(['session_id' => 'delivery']);
+        }
         $bot->sendMessage([
             'chat_id' => $chat_id,
-            'text' => 'Введите адрес:',
-            'reply_markup' => $reply_markup
+            'text' => 'Вариант доставки:',
+            'reply_markup' => $reply_markup,
         ]);
     }
-    private function updateClient($bot, $shop, $client, $chat_id, $update_message){
+
+    private function updateClient($bot, $shop, $client, $chat_id, $update_message)
+    {
+        $next = false;
         $update_field = $client->session_id;
+        $all_session = explode("_", $update_field, 2);
 
         if ($update_message == 'all') {
             $next = true;
-        }
-        else {
+            $this->sendName($bot, $client, $chat_id, $next);
+            $client->update(['session_id' => 'all_first_name']);
+        } elseif ($all_session[0] == 'all') {
+            $next = true;
+            $client->update([$all_session[1] => $update_message]);
+
+            if ($all_session[1] == 'delivery') {
+                $this->sendOrder($bot, $shop, $client, $chat_id);
+            }
+
+        } else {
             $client->update([$update_field => $update_message]);
+            $client->update(['session_id' => null]);
         }
 
-        $client->update(['session_id' => null]);
-        
-        switch ($update_field) {
-            case 'first_name':
-                $success_message = "Имя обновлено";
-                break;
-            
-            case 'phone':
-                $success_message = "Телефон обновлен.";
-                break;
-
-            case 'address':
-                $success_message = "Адрес обновлен.";
-                break;
-
-            case 'delivery':
-                $success_message = "";
-                break;
-        }
-        $bot->sendMessage([
-            'chat_id' => $chat_id,
-            'text' => $success_message,
-        ]);
-
-        if ($next == true) {
-            switch ($update_field) {
+        if ($next == true && $update_message != 'all') {
+            switch ($all_session[1]) {
                 case 'first_name':
-                    $this->sendPhone($bot, $client, $chat_id);
+                    $this->sendPhone($bot, $client, $chat_id, $next);
                     break;
-                
+
                 case 'phone':
-                    $this->sendAddress($bot, $client, $chat_id);
+                    $this->sendAddress($bot, $client, $chat_id, $next);
                     break;
 
                 case 'address':
-                    $this->sendDelivery($bot, $client, $chat_id);
+                    $this->sendDelivery($bot, $client, $chat_id, $next);
                     break;
             }
+        } elseif ($next == false) {
+            switch ($update_field) {
+                case 'first_name':
+                    $success_message = "Имя обновлено";
+                    break;
+
+                case 'phone':
+                    $success_message = "Телефон обновлен.";
+                    break;
+
+                case 'address':
+                    $success_message = "Адрес обновлен.";
+                    break;
+
+                case 'delivery':
+                    $success_message = "";
+                    break;
+            }
+
+            $bot->sendMessage([
+                'chat_id' => $chat_id,
+                'text' => $success_message,
+            ]);
         }
 
     }
@@ -233,7 +263,10 @@ class BotController extends Controller
 
         $message_id = $callback_query->message->message_id;
 
-        if (strpos($callback_query->data, 's') === 0) {
+        if (strpos($callback_query->data, 'successOrder') === 0) {
+            $this->successOrder($bot, $client, $chat_id);
+        }
+        elseif (strpos($callback_query->data, 's') === 0) {
             $this->sendProducts($bot, $shop, $callback_query->data, $chat_id);
         } elseif (strpos($callback_query->data, 'p') === 0) {
             $this->sendProduct($bot, $shop, $callback_query->data, $chat_id);
@@ -268,7 +301,8 @@ class BotController extends Controller
         ]);
     }
 
-    private function sendSettings($bot, $shop, $chat_id) {
+    private function sendSettings($bot, $shop, $chat_id)
+    {
         $data = [
             ['Имя', 'Телефон'], ['Адрес'], ['Главное меню'],
         ];
@@ -278,7 +312,7 @@ class BotController extends Controller
             'chat_id' => $chat_id,
             'text' => 'Настройки',
             'reply_markup' => $keyboard,
-            'one_time_keyboard' => true
+            'one_time_keyboard' => true,
         ]);
     }
 
@@ -332,14 +366,14 @@ class BotController extends Controller
 
         $text = "<a href='" . $product->img . "'>" . $product->name . "</a>" . "\n" .
         $product->description . "\n" .
-        $product->url. "\n" .
+        $product->url . "\n" .
         'Цена:' . $product->price;
 
         $bot->sendMessage([
             'chat_id' => $chat_id,
             'parse_mode' => 'HTML',
             'text' => $text,
-            'reply_markup' => $keyboard
+            'reply_markup' => $keyboard,
         ]);
 
     }
@@ -348,13 +382,13 @@ class BotController extends Controller
         $cart = Cart::where('catalog_id', $product_id)->first();
         $data = [
             [Keyboard::inlineButton(['callback_data' => 'delete' . $product_id, 'text' => '❌']),
-                Keyboard::inlineButton(['callback_data' => 'uncount'. $callback_message, 'text' => '🔻']),
+                Keyboard::inlineButton(['callback_data' => 'uncount' . $callback_message, 'text' => '🔻']),
                 Keyboard::inlineButton(['callback_data' => 'amount', 'text' => $cart->amount]),
-                Keyboard::inlineButton(['callback_data' => 'count'. $callback_message, 'text' => '🔺'])],
+                Keyboard::inlineButton(['callback_data' => 'count' . $callback_message, 'text' => '🔺'])],
             [Keyboard::inlineButton(['callback_data' => 'back' . $back, 'text' => '◀️']),
                 Keyboard::inlineButton(['callback_data' => '1', 'text' => $callback_message + 1 . '/' . $cart->count()]),
                 Keyboard::inlineButton(['callback_data' => 'next' . $next, 'text' => '▶️'])],
-                [Keyboard::inlineButton(['callback_data' => 'newOrder' . $next, 'text' => 'Заказать товары'])]
+            [Keyboard::inlineButton(['callback_data' => 'newOrder' . $next, 'text' => 'Заказать товары'])],
         ];
 
         $keyboard = $this->makeInlineKeyboard($data);
@@ -371,10 +405,9 @@ class BotController extends Controller
 
         switch ($callback) {
             case 'delete':
-                if($count > 1) {
+                if ($count > 1) {
                     Cart::where('catalog_id', $callback_message)->delete();
-                }
-                else {
+                } else {
                     Cart::where('catalog_id', $callback_message)->delete();
                     $this->sendCatalogs($bot, $shop, $chat_id);
                 }
@@ -396,7 +429,8 @@ class BotController extends Controller
 
                 $text = "<a href='" . $product->img . "'>" . $product->name . "</a>" . "\n" .
                 $product->description . "\n" .
-                $product->url;
+                $product->url . "\n" .
+                'Цена:' . $product->price;
 
                 $bot->editMessageText([
                     'chat_id' => $chat_id,
@@ -414,6 +448,7 @@ class BotController extends Controller
 
                 }
                 if ($callback_message == 0) {
+                    $next = 0;
                     $back = $count - 1;
                 } else {
                     $next = 0;
@@ -426,7 +461,7 @@ class BotController extends Controller
 
                 $text = "<a href='" . $product->img . "'>" . $product->name . "</a>" . "\n" .
                 $product->description . "\n" .
-                $product->url. "\n" .
+                $product->url . "\n" .
                 'Цена:' . $product->price;
 
                 $bot->editMessageText([
@@ -446,6 +481,7 @@ class BotController extends Controller
 
                 }
                 if ($callback_message == 0) {
+                    $next = 0;
                     $back = $count - 1;
                 } else {
                     $next = 0;
@@ -456,12 +492,12 @@ class BotController extends Controller
                 }
 
                 $product = Catalog::where(['id' => $cart[$callback_message]->catalog_id])->first();
-               
+
                 $keyboard = $this->makeKeyboardForCart($product->id, $back, $next, $callback_message);
 
                 $text = "<a href='" . $product->img . "'>" . $product->name . "</a>" . "\n" .
                 $product->description . "\n" .
-                $product->url. "\n" .
+                $product->url . "\n" .
                 'Цена:' . $product->price;
 
                 $bot->editMessageText([
@@ -494,7 +530,7 @@ class BotController extends Controller
 
                 $text = "<a href='" . $product->img . "'>" . $product->name . "</a>" . "\n" .
                 $product->description . "\n" .
-                $product->url. "\n" .
+                $product->url . "\n" .
                 'Цена:' . $product->price;
 
                 $bot->editMessageText([
@@ -518,12 +554,13 @@ class BotController extends Controller
                 }
 
                 $product = Catalog::where(['id' => $cart[intval($callback_message)]->catalog_id])->first();
-                
+
                 $keyboard = $this->makeKeyboardForCart($product->id, $back, $next, $callback_message);
 
                 $text = "<a href='" . $product->img . "'>" . $product->name . "</a>" . "\n" .
                 $product->description . "\n" .
-                $product->url;
+                $product->url . "\n" .
+                'Цена:' . $product->price;
 
                 $bot->editMessageText([
                     'chat_id' => $chat_id,
@@ -546,19 +583,17 @@ class BotController extends Controller
         if ($count > 1) {
             $next = 1;
             $back = 0;
-        }
-        else {
+        } else {
             $next = 0;
             $back = 0;
         }
-        if($count < 1) { 
+        if ($count < 1) {
             $bot->sendMessage([
                 'chat_id' => $chat_id,
                 'text' => 'Корзина пуста.',
             ]);
             return;
-        }
-        else {
+        } else {
             $product = Catalog::where(['id' => $cart[0]->catalog_id])->first();
         }
         $data = [
@@ -569,13 +604,14 @@ class BotController extends Controller
             [Keyboard::inlineButton(['callback_data' => 'back' . $back, 'text' => '◀️']),
                 Keyboard::inlineButton(['callback_data' => '1', 'text' => '1/' . $cart->count()]),
                 Keyboard::inlineButton(['callback_data' => 'next' . $next, 'text' => '▶️'])],
+            [Keyboard::inlineButton(['callback_data' => 'newOrder', 'text' => 'Заказать товары'])],
         ];
 
         $keyboard = $this->makeInlineKeyboard($data);
 
         $text = "<a href='" . $product->img . "'>" . $product->name . "</a>" . "\n" .
         $product->description . "\n" .
-        $product->url. "\n" .
+        $product->url . "\n" .
         'Цена:' . $product->price;
 
         $bot->sendMessage([
@@ -635,12 +671,93 @@ class BotController extends Controller
         }
     }
 
-    private function newOrder($bot, $shop, $client, $chat_id) {
+    private function newOrder($bot, $shop, $client, $chat_id)
+    {
         $client = Client::where('username', $client['username'])->first();
 
-        if ($client->phone == null || $client->address == null ) {
-            $this->updateClient($bot, $shop, $client, $chat_id, 'all');
+        $this->updateClient($bot, $shop, $client, $chat_id, 'all');
+
+    }
+
+    private function sendOrder($bot, $shop, $client, $chat_id)
+    {
+        $sum_all = 0;
+        $products = "";
+
+        foreach ($client->cart as $key => $cart) {
+            $i = $key + 1;
+            $product = $cart->product;
+            $sum = $product->price * $cart->amount;
+            $sum_all += $sum;
+            $products .= "$i) $product->name — $cart->amount шт. = $sum \n";
         }
+
+        $text = "Общая сумма: " . $sum_all . "\n" .
+        "Получатель: " . $client->first_name . "\n" .
+        "Телефон: " . $client->phone . "\n" .
+        "Адрес доставки: " . $client->address . "\n \n" .
+        "Товары: \n" .
+        $products . "\n" .
+        "Доставка: " . $client->delivery;
+
+        $data = [
+            [Keyboard::inlineButton(['callback_data' => 'successOrder', 'text' => 'Подтвердить и отправить'])],
+            [Keyboard::inlineButton(['callback_data' => 'newOrder', 'text' => 'Изменить'])],
+        ];
+
+        $keyboard = $this->makeInlineKeyboard($data);
+
+        $client->update(['session_id' => null]);
+
+        $bot->sendMessage([
+            'chat_id' => $chat_id,
+            'parse_mode' => 'HTML',
+            'text' => $text,
+            'reply_markup' => $keyboard,
+        ]);
+    }
+
+    private function successOrder($bot, $client, $callback_query)
+    {
+        $client = Client::where('username', $client->username)->first()->cart;
+        $sum_all = 0;
+        $products = "";
+
+        foreach ($client->cart as $key => $cart) {
+            $i = $key + 1;
+            $product = $cart->product;
+            $sum = $product->price * $cart->amount;
+            $sum_all += $sum;
+            $products .= "$i) $product->name — $cart->amount шт. = $sum \n";
+        }
+
+        $text = "Заказ:  \n" .
+        "Общая сумма: " . $sum_all . "\n" .
+        "Получатель: " . $client->first_name . "\n" .
+        "Телефон: " . $client->phone . "\n" .
+        "Адрес доставки: " . $client->address . "\n \n" .
+        "Товары: \n" .
+        $products . "\n" .
+        "Доставка: " . $client->delivery;
+
+        $bot->sendMessage([
+            'chat_id' => $chat_id,
+            'parse_mode' => 'HTML',
+            'text' => $text,
+        ]);  
+
+        foreach ($cart as $product) {
+            Order::create([
+                'active' => 1,
+                'client_id' => $product->client_id,
+                'shop_id' => $product->shop_id,
+                'catalog_id' => $product->catalog_id,
+                'amount' => $product->amount,
+            ]);
+            $product->delete();
+       
+        }
+
     }
 
     public function mailing(Request $request)

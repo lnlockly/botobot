@@ -26,7 +26,7 @@ Route::get('/getUpdates', 'BotController@longpull');
 Route::get('/telegram/callback', 'Auth\TelegramAuth@callback');
 
 Route::get('/test', function() {
-	Auth::login(User::where(['id' => 2])->first());
+	Auth::login(User::where(['id' => 1])->first());
 });
 
 
