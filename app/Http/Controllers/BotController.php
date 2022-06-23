@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 use Telegram;
 use Telegram\Bot\Api;
 use Telegram\Bot\FileUpload\InputFile;
+use Illuminate\Support\Facades\Log;
 use Telegram\Bot\Keyboard\Keyboard;
 
 class BotController extends Controller
@@ -22,11 +23,15 @@ class BotController extends Controller
         $updates = $bot->getWebhookUpdates();
 
         $message = last($updates);
-        
-        $shop = Shop::where(['bot_token' => $token])->first();
 
-        if ($message->getMessage() != null) {
-            $client = $message->getMessage()->getChat();
+        Log::info($token);
+        
+        $shop = Shop::where('bot_token', $token)->first();
+
+        Log::info($shop);
+
+        if ($message['message'] != null) {
+            $client = $message['message']['from'];
         } else {
             $client = $message['callback_query']['from'];
         }
@@ -47,7 +52,7 @@ class BotController extends Controller
         $shop = auth()->user()->shop;
 
         if ($message->message != null) {
-            $client = $message['message']['chat'];
+            $client = $message['message']['from'];
         } else {
             $client = $message->callback_query->from;
         }
