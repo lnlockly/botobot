@@ -30,8 +30,9 @@ class BotController extends Controller
 
         Log::info($shop);
 
-        if ($message['message'] != null) {
+        if (isset($message['message'])) {
             $client = $message['message']['chat'];
+            
         } else {
             $client = $message['callback_query']['from'];
         }
@@ -495,10 +496,10 @@ class BotController extends Controller
         } else {
             $new_client = new Client;
 
-            $new_client->telegram_id = $client->id;
-            $new_client->first_name = $client->first_name;
-            $new_client->last_name = $client->last_name;
-            $new_client->username = $client->username;
+            $new_client->telegram_id = $client['id'];
+            $new_client->first_name = $client['first_name'];
+            $new_client->last_name = $client['last_name'];
+            $new_client->username = $client['username'];
             $new_client->shop_id = $shop_id;
 
             $new_client->save();
