@@ -90,9 +90,9 @@ class BotController extends Controller
 
     private function checkMessage($bot, $shop, $message)
     {
-        if ($message['callback_query'] != null) {
+        if (isset($message['callback_query'])) {
             $this->checkCallback($bot, $shop, $message);
-        } elseif ($message['message'] != null) {
+        } elseif (isset($message['message'])) {
             $client = $message['message']['chat'];
 
             $message_text = $message->message->text;
