@@ -717,9 +717,9 @@ class BotController extends Controller
         ]);
     }
 
-    private function successOrder($bot, $client, $callback_query)
+    private function successOrder($bot, $client, $chat_id)
     {
-        $client = Client::where('username', $client->username)->first()->cart;
+        $client = Client::where('username', $client->username)->first();
         $sum_all = 0;
         $products = "";
 
@@ -746,7 +746,7 @@ class BotController extends Controller
             'text' => $text,
         ]);  
 
-        foreach ($cart as $product) {
+        foreach ($client->cart  as $product) {
             Order::create([
                 'active' => 1,
                 'client_id' => $product->client_id,

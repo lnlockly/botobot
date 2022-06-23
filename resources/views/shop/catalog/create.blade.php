@@ -3,7 +3,7 @@
 <div class="grid-margin stretch-card">
     <div class="card">
         <div class="card-body">
-            <h4 class="card-title">Add product</h4>
+            <h4 class="card-title">Добавить товар</h4>
             <form class="form-inline" method="post" action="{{ route('catalog.save'
             ) }}">
                 @csrf
@@ -43,7 +43,7 @@
                         <input type="text" class="form-control" id="price" name="price">
                     </div>
                 </div>
-                <button type="submit" class="btn btn-primary me-2">Submit</button>
+                <button type="submit" class="btn btn-primary me-2">Добавить</button>
             </form>
         </div>
     </div>

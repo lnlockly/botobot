@@ -3,8 +3,8 @@
 <div class="col-lg-12">
   <div class="card">
     <div class="card-body">
-      <h4 class="card-title">Клиенты</h4>
-       @livewire('clients-table-view')
+      <h4 class="card-title">Заказы</h4>
+       @livewire('orders-table-view')
     </div>
   </div>
 </div>

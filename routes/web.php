@@ -40,6 +40,14 @@ Route::middleware('if_shop')->group(function () {
 
 	Route::get('/statistic/orders', 'OrderController@index')->name('statistic.orders');
 
+	Route::get('/statistic/catalogs', function () {
+		return view('shop.statistic.catalogs');
+	})->name('statistic.catalogs');
+
+	Route::get('/statistic/orders', function () {
+		return view('shop.statistic.orders');
+	})->name('statistic.orders');
+	
 	Route::post('/shop/save', 'ShopController@save')->name('shop.save');
 
 	Route::post('/catalogs/save', 'CatalogController@save')->name('catalog.save');

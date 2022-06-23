@@ -8,18 +8,18 @@
             ) }}">
                 @csrf
                 <div class="form-group row">
-                    <label for="name" class="col-sm-3 col-form-label">Name</label>
+                    <label for="name" class="col-sm-3 col-form-label">Имя</label>
                     <div class="col-sm-9">
                         <input type="text" class="form-control" name="name" id="ename" placeholder="Username">
                     </div>
                 </div>
                 <div class="form-group row">
-                    <label for="bot_token" class="col-sm-3 col-form-label">Bot's token</label>
+                    <label for="bot_token" class="col-sm-3 col-form-label">Токен бота</label>
                     <div class="col-sm-9">
                         <input type="text" class="form-control" id="bot_token" name="bot_token" placeholder="Bot's token">
                     </div>
                 </div>
-                <button type="submit" class="btn btn-primary me-2">Submit</button>
+                <button type="submit" class="btn btn-primary me-2">Создать</button>
             </form>
             <form method="post" action="{{ route('catalog.save') }}">
                 @csrf
