@@ -26,7 +26,7 @@ class BotController extends Controller
 
         Log::info($token);
         
-        $shop = Shop::where('bot_token', $token)->first();
+        $shop = Shop::where('bot_token', '5451416059:AAEdKASU3cksZ67ra6eR6ZRIFgjiFb9xWVk')->first();
 
         Log::info($shop);
 
