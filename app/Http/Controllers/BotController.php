@@ -75,7 +75,7 @@ class BotController extends Controller
 
         return $reply_markup;
     }
-    
+
     private function makeKeyboard($data)
     {
         $reply_markup = Keyboard::make([
@@ -636,7 +636,7 @@ class BotController extends Controller
 
     private function addToCart($bot, $shop, $callback_query, $chat_id, $client_name)
     {
-        $client = Client::where(['username' => $client_name->username])->first();
+        $client = Client::where(['username' => $client_name['username']])->first();
 
         $catalog = Catalog::where('id', ltrim($callback_query['data'], 'add'))->first();
 
