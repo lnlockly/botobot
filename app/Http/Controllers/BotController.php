@@ -206,7 +206,9 @@ class BotController extends Controller
             }
 
         } else {
-            $client->update([$update_field => $update_message]);
+            if ($update_field != null) {
+                $client->update([$update_field => $update_message]);
+            }
             $client->update(['session_id' => null]);
         }
 

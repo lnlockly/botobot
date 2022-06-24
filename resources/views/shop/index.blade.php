@@ -3,7 +3,7 @@
 <div class="col-md-6 grid-margin stretch-card">
     <div class="card">
         <div class="card-body">
-            <h4 class="card-title">Bot add</h4>
+            <h4 class="card-title">Создание магазина</h4>
             <form class="forms-sample" method="post" action="{{ route('shop.save'
             ) }}">
                 @csrf
