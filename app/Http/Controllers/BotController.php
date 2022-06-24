@@ -119,16 +119,16 @@ class BotController extends Controller
                     $this->sendSettings($bot, $shop, $chat_id);
                     break;
                 case 'Имя':
-                    $this->sendName($bot, $client_db, $chat_id);
+                    $this->sendName($bot, $client_db, $chat_id, false);
                     break;
                 case 'Телефон':
-                    $this->sendPhone($bot, $client_db, $chat_id);
+                    $this->sendPhone($bot, $client_db, $chat_id, false);
                     break;
                 case 'Адрес':
-                    $this->sendAddress($bot, $client_db, $chat_id);
+                    $this->sendAddress($bot, $client_db, $chat_id, false);
                     break;
                 case 'Доставка':
-                    $this->sendDelivery($bot, $client_db, $chat_id);
+                    $this->sendDelivery($bot, $client_db, $chat_id, false);
                     break;
             }
         }
