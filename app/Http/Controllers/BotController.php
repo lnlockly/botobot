@@ -761,7 +761,7 @@ class BotController extends Controller
             'text' => $text,
         ]);  
 
-        foreach ($cart as $product) {
+        foreach ($client->cart as $product) {
             Order::create([
                 'active' => 1,
                 'client_id' => $product->client_id,
