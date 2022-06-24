@@ -28,6 +28,11 @@ class BotController extends Controller
         
         $shop = Shop::firstWhere('bot_token', $token);
 
+        if ($shop == null) {
+            $bot->removeWebhook();
+            return 'this webhook was removed';
+        }
+
         Log::info($shop);
 
         if (isset($message['message'])) {
@@ -95,8 +100,8 @@ class BotController extends Controller
         } elseif (isset($message['message'])) {
             $client = $message['message']['chat'];
 
-            $message_text = $message->message->text;
-            $chat_id = $message->message->chat->id;
+            $message_text = $message['message']['text'];
+            $chat_id = $message['message']['chat']['id'];
             switch ($message_text) {
                 case 'Товары':
                     $this->sendCatalogs($bot, $shop, $chat_id);
@@ -116,30 +121,32 @@ class BotController extends Controller
 
     private function checkCallback($bot, $shop, $message)
     {
-        $callback_query = $message->callback_query;
+        $callback_query = $message['callback_query'];
 
-        $chat_id = $callback_query->message->chat->id;
+        $chat_id = $callback_query['message']['chat']['id'];
 
-        $client = $callback_query->from;
+        $client = $callback_query['from'];
 
-        $message_id = $callback_query->message->message_id;
+        $message_id = $callback_query['message']['message_id'];
 
-        if (strpos($callback_query->data, 's') === 0) {
-            $this->sendProducts($bot, $shop, $callback_query->data, $chat_id);
-        } elseif (strpos($callback_query->data, 'p') === 0) {
-            $this->sendProduct($bot, $shop, $callback_query->data, $chat_id);
-        } elseif (strpos($callback_query->data, 'add') === 0) {
+        $data = $callback_query['data'];
+
+        if (strpos($data, 's') === 0) {
+            $this->sendProducts($bot, $shop, $data, $chat_id);
+        } elseif (strpos($data, 'p') === 0) {
+            $this->sendProduct($bot, $shop, $data, $chat_id);
+        } elseif (strpos($data, 'add') === 0) {
             $this->addToCart($bot, $shop, $callback_query, $chat_id, $client);
-        } elseif (strpos($callback_query->data, 'back') === 0) {
-            $this->updateCart($bot, $shop, $client, $chat_id, 'back', ltrim($callback_query->data, 'back'), $message_id);
-        } elseif (strpos($callback_query->data, 'next') === 0) {
-            $this->updateCart($bot, $shop, $client, $chat_id, 'next', ltrim($callback_query->data, 'next'), $message_id);
-        } elseif (strpos($callback_query->data, 'uncount') === 0) {
-            $this->updateCart($bot, $shop, $client, $chat_id, 'uncount', ltrim($callback_query->data, 'uncount'), $message_id);
-        } elseif (strpos($callback_query->data, 'count') === 0) {
-            $this->updateCart($bot, $shop, $client, $chat_id, 'count', ltrim($callback_query->data, 'count'), $message_id);
-        } elseif (strpos($callback_query->data, 'delete') === 0) {
-            $this->updateCart($bot, $shop, $client, $chat_id, 'delete', ltrim($callback_query->data, 'delete'), $message_id);
+        } elseif (strpos($data, 'back') === 0) {
+            $this->updateCart($bot, $shop, $client, $chat_id, 'back', ltrim($data, 'back'), $message_id);
+        } elseif (strpos($data, 'next') === 0) {
+            $this->updateCart($bot, $shop, $client, $chat_id, 'next', ltrim($data, 'next'), $message_id);
+        } elseif (strpos($data, 'uncount') === 0) {
+            $this->updateCart($bot, $shop, $client, $chat_id, 'uncount', ltrim($data, 'uncount'), $message_id);
+        } elseif (strpos($data, 'count') === 0) {
+            $this->updateCart($bot, $shop, $client, $chat_id, 'count', ltrim($data, 'count'), $message_id);
+        } elseif (strpos($data, 'delete') === 0) {
+            $this->updateCart($bot, $shop, $client, $chat_id, 'delete', ltrim($data, 'delete'), $message_id);
         }
     }
 
@@ -459,11 +466,11 @@ class BotController extends Controller
 
     private function addToCart($bot, $shop, $callback_query, $chat_id, $client_name)
     {
-        $client = Client::where(['username' => $client_name->username])->first();
+        $client = Client::where(['username' => $client_name['username']])->first();
 
-        $catalog = Catalog::where('id', ltrim($callback_query->data, 'add'))->first();
+        $catalog = Catalog::where('id', ltrim($callback_query['data'], 'add'))->first();
 
-        $old_cart = Cart::where('catalog_id', ltrim($callback_query->data, 'add'))->first();
+        $old_cart = Cart::where('catalog_id', ltrim($callback_query['data'], 'add'))->first();
 
         if ($old_cart != null) {
             $old_cart->update(['amount' => $old_cart->amount + 1]);
@@ -481,7 +488,7 @@ class BotController extends Controller
             $cart->save();
         }
         $bot->answerCallbackQuery([
-            'callback_query_id' => $callback_query->id,
+            'callback_query_id' => $callback_query['id'],
             'text' => 'Корзина обновлена',
             'cache_time' => 1,
         ]);
