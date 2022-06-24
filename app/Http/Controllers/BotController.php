@@ -65,6 +65,17 @@ class BotController extends Controller
         $this->checkMessage($bot, $shop, $message);
     }
 
+    private function makeInlineKeyboard($data)
+    {
+        $reply_markup = Keyboard::make([
+            'inline_keyboard' => $data,
+            'resize_keyboard' => true,
+            'one_time_keyboard' => false,
+        ]);
+
+        return $reply_markup;
+    }
+    
     private function makeKeyboard($data)
     {
         $reply_markup = Keyboard::make([
