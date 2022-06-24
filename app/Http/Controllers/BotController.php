@@ -7,6 +7,7 @@ use App\Catalog;
 use App\Client;
 use App\Shop;
 use App\User;
+use App\Order;
 use Illuminate\Http\Request;
 use Telegram;
 use Telegram\Bot\Api;
