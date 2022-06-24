@@ -731,7 +731,7 @@ class BotController extends Controller
         ]);
     }
 
-    private function successOrder($bot, $client, $callback_query)
+    private function successOrder($bot, $client, $chat_id)
     {
         $client = Client::where('username', $client['username'])->first();
         $sum_all = 0;
