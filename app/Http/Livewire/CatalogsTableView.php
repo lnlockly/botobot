@@ -5,6 +5,7 @@ namespace App\Http\Livewire;
 use App\Catalog;
 use Illuminate\Database\Eloquent\Builder;
 use LaravelViews\Facades\UI;
+use LaravelViews\Facades\Header;
 use LaravelViews\Views\TableView;
 
 class CatalogsTableView extends TableView
@@ -25,7 +26,14 @@ class CatalogsTableView extends TableView
      */
     public function headers(): array
     {
-        return ['Раздел', 'Название', 'Описание', 'Ссылка на товар', 'Ссылка на изображение', 'Цена'];
+        return [
+            Header::title('Раздел')->width('10%'),
+            Header::title('Название')->width('10%'),
+            Header::title('Описание')->width('25%'),
+            Header::title('Ссылка на товар')->width('25%'),
+            Header::title('Ссылка на изображение')->width('25%'),
+            Header::title('Цена')->width('5%'),
+        ];
     }
 
     /**
