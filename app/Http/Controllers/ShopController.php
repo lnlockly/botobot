@@ -15,6 +15,9 @@ class ShopController extends Controller
     }
 
     public function save(Request $request) {
+        if (!auth()-check()) {
+            return redirect(route('login'));
+        }
     	$shop = new Shop;
 
     	$shop->name = $request->name;
