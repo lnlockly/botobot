@@ -15,9 +15,6 @@ class ShopController extends Controller
     }
 
     public function save(Request $request) {
-        if (!auth()-check()) {
-            return redirect(route('login'));
-        }
     	$shop = new Shop;
 
     	$shop->name = $request->name;
@@ -30,8 +27,10 @@ class ShopController extends Controller
         
         $telegram = new Api($request->bot_token);
         $telegram->setWebhook(['url' => 'https://chipbot.ru/'.$request->bot_token.'/webhook']);
+        
+        $message = "Магазин создан";
 
-    	return redirect()->back();
+    	return redirect(route('statistic.catalogs'))->with('message', 'Магазин создан');
     }
 
 }

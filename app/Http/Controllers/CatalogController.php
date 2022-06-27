@@ -36,7 +36,7 @@ class CatalogController extends Controller
 
 		$catalog->save();
 
-		return redirect()->back();
+		return redirect(route('statistic.catalogs'))->with('message', 'Товар успешно добавлен');
 	}
 
     public function import(Request $request) {
