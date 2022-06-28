@@ -54,9 +54,11 @@
             </button>
             <ul class="navbar-nav navbar-nav-right">
                 <li class="nav-item nav-profile dropdown">
+                    @if (auth()->user()->shop != null)
                     <a class="nav-link dropdown-toggle" href="https://t.me/{{ auth()->user()->shop->name }}" data-bs-toggle="dropdown" id="profileDropdown">
                         <img src="images/faces/face28.jpg" alt="{{ auth()->user()->shop->name  }}" />
                     </a>
+                    @endif
                     <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="profileDropdown">
                         <a class="dropdown-item">
                             <i class="ti-settings text-primary"></i>
