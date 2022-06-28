@@ -380,7 +380,7 @@ class BotController extends Controller
         $text = "<a href='" . $product->img . "'>" . $product->name . "</a>" . "\n" .
         $product->description . "\n" .
         $product->url . "\n" .
-        'Цена:' . $product->price;
+        'Цена:' . $product->price . $shop->currency;
 
         $bot->sendMessage([
             'chat_id' => $chat_id,
@@ -443,7 +443,7 @@ class BotController extends Controller
                 $text = "<a href='" . $product->img . "'>" . $product->name . "</a>" . "\n" .
                 $product->description . "\n" .
                 $product->url . "\n" .
-                'Цена:' . $product->price;
+                'Цена:' . $product->price .  $shop->currency;
 
                 $bot->editMessageText([
                     'chat_id' => $chat_id,
@@ -475,7 +475,7 @@ class BotController extends Controller
                 $text = "<a href='" . $product->img . "'>" . $product->name . "</a>" . "\n" .
                 $product->description . "\n" .
                 $product->url . "\n" .
-                'Цена:' . $product->price;
+                'Цена:' . $product->price .  $shop->currency;
 
                 $bot->editMessageText([
                     'chat_id' => $chat_id,
@@ -511,7 +511,7 @@ class BotController extends Controller
                 $text = "<a href='" . $product->img . "'>" . $product->name . "</a>" . "\n" .
                 $product->description . "\n" .
                 $product->url . "\n" .
-                'Цена:' . $product->price;
+                'Цена:' . $product->price .  $shop->currency;
 
                 $bot->editMessageText([
                     'chat_id' => $chat_id,
@@ -544,7 +544,7 @@ class BotController extends Controller
                 $text = "<a href='" . $product->img . "'>" . $product->name . "</a>" . "\n" .
                 $product->description . "\n" .
                 $product->url . "\n" .
-                'Цена:' . $product->price;
+                'Цена:' . $product->price .  $shop->currency;
 
                 $bot->editMessageText([
                     'chat_id' => $chat_id,
@@ -573,7 +573,7 @@ class BotController extends Controller
                 $text = "<a href='" . $product->img . "'>" . $product->name . "</a>" . "\n" .
                 $product->description . "\n" .
                 $product->url . "\n" .
-                'Цена:' . $product->price;
+                'Цена:' . $product->price .  $shop->currency;
 
                 $bot->editMessageText([
                     'chat_id' => $chat_id,
@@ -707,7 +707,7 @@ class BotController extends Controller
             $products .= "$i) $product->name — $cart->amount шт. = $sum \n";
         }
 
-        $text = "Общая сумма: " . $sum_all . "\n" .
+        $text = "Общая сумма: " . $sum_all . $shop->currency .  "\n" .
         "Получатель: " . $client->first_name . "\n" .
         "Телефон: " . $client->phone . "\n" .
         "Адрес доставки: " . $client->address . "\n \n" .
@@ -747,7 +747,7 @@ class BotController extends Controller
         }
 
         $text = "Заказ:  \n" .
-        "Общая сумма: " . $sum_all . "\n" .
+        "Общая сумма: " . $sum_all . $shop->currency . "\n" .
         "Получатель: " . $client->first_name . "\n" .
         "Телефон: " . $client->phone . "\n" .
         "Адрес доставки: " . $client->address . "\n \n" .

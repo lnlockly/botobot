@@ -17,10 +17,19 @@ class ShopController extends Controller
     public function save(Request $request) {
     	$shop = new Shop;
 
+
+        switch ($request->currency) {
+            case "RUB": 
+                $currency = "₽";
+                break;
+            case "USD":
+                $currency = "$";
+                break;
+        }
     	$shop->name = $request->name;
     	$shop->bot_token = $request->bot_token;
     	$shop->language = "ru";
-    	$shop->currency = "rub";
+    	$shop->currency = $currency;
     	$shop->timezone = "+3";
         $shop->user_id = auth()->user()->id;
     	$shop->save();
