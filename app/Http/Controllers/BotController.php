@@ -277,7 +277,7 @@ class BotController extends Controller
         $data = $callback_query['data'];
 
         if (strpos($data, 'successOrder') === 0) {
-            $this->successOrder($bot, $client, $chat_id);
+            $this->successOrder($bot, $shop, $client, $chat_id);
         }
         elseif (strpos($data, 's') === 0) {
             $this->sendProducts($bot, $shop, $data, $chat_id);
@@ -625,7 +625,7 @@ class BotController extends Controller
         $text = "<a href='" . $product->img . "'>" . $product->name . "</a>" . "\n" .
         $product->description . "\n" .
         $product->url . "\n" .
-        'Цена:' . $product->price;
+        'Цена:' . $product->price . $shop->currency;
 
         $bot->sendMessage([
             'chat_id' => $chat_id,
@@ -732,7 +732,7 @@ class BotController extends Controller
         ]);
     }
 
-    private function successOrder($bot, $client, $chat_id)
+    private function successOrder($bot, $shop, $client, $chat_id)
     {
         $client = Client::where('username', $client['username'])->first();
         $sum_all = 0;
