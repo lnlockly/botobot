@@ -5,14 +5,11 @@ namespace App\Http\Controllers;
 use App\Cart;
 use App\Catalog;
 use App\Client;
+use App\Order;
 use App\Shop;
 use App\User;
-use App\Order;
 use Illuminate\Http\Request;
-use Telegram;
 use Telegram\Bot\Api;
-use Telegram\Bot\FileUpload\InputFile;
-use Illuminate\Support\Facades\Log;
 use Telegram\Bot\Keyboard\Keyboard;
 
 class BotController extends Controller
@@ -25,7 +22,6 @@ class BotController extends Controller
 
         $message = last($updates);
 
-        
         $shop = Shop::firstWhere('bot_token', $token);
 
         if ($shop == null) {
@@ -35,7 +31,7 @@ class BotController extends Controller
 
         if (isset($message['message'])) {
             $client = $message['message']['chat'];
-            
+
         } else {
             $client = $message['callback_query']['from'];
         }
@@ -47,19 +43,22 @@ class BotController extends Controller
 
     public function longpull()
     {
-        $bot = new Api('5485216336:AAFYZxAlRoGYeGXoBdfw6U2TVmjCQnpVIcM');
+        $bot = new Api('5416120430:AAHA6PK0jFGRjAH0XcnFLN8QCvPAKB67414');
 
         $response = $bot->getUpdates();
 
         $message = last($response);
+    
 
         $shop = auth()->user()->shop;
 
-        if ($message->message != null) {
-            $client = $message['message']['from'];
+        if (isset($message['message'])) {
+            $client = $message['message']['chat'];
+
         } else {
-            $client = $message->callback_query->from;
+            $client = $message['callback_query']['from'];
         }
+
 
         $this->checkClient($client, $shop->id);
 
@@ -199,14 +198,14 @@ class BotController extends Controller
         ]);
     }
 
-
-    private function getText($product, $shop) {
+    private function getText($product, $shop)
+    {
         $text = "<a href='" . $product->img . "'>" . $product->name . "</a>" . "\n" .
         $product->description . "\n" .
         $product->url . "\n" .
-        'Цена:' . $product->price .  $shop->currency;
-    
-        return $text;   
+        'Цена:' . $product->price . $shop->currency;
+
+        return $text;
     }
 
     private function updateClient($bot, $shop, $client, $chat_id, $update_message)
@@ -288,8 +287,7 @@ class BotController extends Controller
 
         if (strpos($data, 'successOrder') === 0) {
             $this->successOrder($bot, $shop, $client, $chat_id);
-        }
-        elseif (strpos($data, 's') === 0) {
+        } elseif (strpos($data, 's') === 0) {
             $this->sendProducts($bot, $shop, $data, $chat_id);
         } elseif (strpos($data, 'p') === 0) {
             $this->sendProduct($bot, $shop, $data, $chat_id);
@@ -423,6 +421,17 @@ class BotController extends Controller
 
         $callback_message = intval($callback_message);
 
+        if ($count > $callback_message + 1) {
+            $next = $callback_message + 1;
+            $back = $callback_message - 1;
+
+        } else if ($callback_message == 0) {
+            $back = $count - 1;
+        } else {
+            $next = 0;
+            $back = $callback_message - 1;
+        }
+
         switch ($callback) {
             case 'delete':
                 if ($count > 1) {
@@ -432,17 +441,7 @@ class BotController extends Controller
                     $this->sendCatalogs($bot, $shop, $chat_id);
                 }
                 $callback_message = 0;
-                if ($count > $callback_message + 1) {
-                    $next = $callback_message + 1;
-                    $back = $callback_message - 1;
 
-                }
-                if ($callback_message == 0) {
-                    $back = $count - 1;
-                } else {
-                    $next = 0;
-                    $back = $callback_message - 1;
-                }
                 $product = Catalog::where(['id' => $cart[$callback_message]->catalog_id])->first();
 
                 $keyboard = $this->makeKeyboardForCart($product->id, $back, $next, $callback_message);
@@ -459,24 +458,12 @@ class BotController extends Controller
                 break;
 
             case 'count':
-                if ($count > $callback_message + 1) {
-                    $next = $callback_message + 1;
-                    $back = $callback_message - 1;
 
-                }
-                if ($callback_message == 0) {
-                    $next = 0;
-                    $back = $count - 1;
-                } else {
-                    $next = 0;
-                    $back = $callback_message - 1;
-                }
                 $cart[$callback_message]->update(['amount' => $cart[$callback_message]->amount + 1]);
                 $product = Catalog::where(['id' => $cart[$callback_message]->catalog_id])->first();
 
                 $keyboard = $this->makeKeyboardForCart($product->id, $back, $next, $callback_message);
 
-               
                 $text = $this->getText($product, $shop);
 
                 $bot->editMessageText([
@@ -490,18 +477,7 @@ class BotController extends Controller
                 break;
 
             case 'uncount':
-                if ($count > $callback_message + 1) {
-                    $next = $callback_message + 1;
-                    $back = $callback_message - 1;
 
-                }
-                if ($callback_message == 0) {
-                    $next = 0;
-                    $back = $count - 1;
-                } else {
-                    $next = 0;
-                    $back = $callback_message - 1;
-                }
                 if ($cart[$callback_message]->amount > 1) {
                     $cart[$callback_message]->update(['amount' => $cart[$callback_message]->amount - 1]);
                 }
@@ -524,18 +500,6 @@ class BotController extends Controller
 
             case 'back':
 
-                if ($count > $callback_message + 1) {
-                    $next = $callback_message + 1;
-                    $back = $callback_message - 1;
-
-                }
-                if ($callback_message == 0) {
-                    $back = $count - 1;
-                } else {
-                    $next = 0;
-                    $back = $callback_message - 1;
-                }
-
                 $product = Catalog::where(['id' => $cart[intval($callback_message)]->catalog_id])->first();
 
                 $keyboard = $this->makeKeyboardForCart($product->id, $back, $next, $callback_message);
@@ -553,14 +517,6 @@ class BotController extends Controller
                 break;
 
             case 'next':
-
-                if ($count > $callback_message + 1) {
-                    $next = $callback_message + 1;
-                    $back = $callback_message - 1;
-                } else {
-                    $next = 0;
-                    $back = $count - 2;
-                }
 
                 $product = Catalog::where(['id' => $cart[intval($callback_message)]->catalog_id])->first();
 
@@ -697,7 +653,7 @@ class BotController extends Controller
             $products .= "$i) $product->name — $cart->amount шт. = $sum \n";
         }
 
-        $text = "Общая сумма: " . $sum_all . $shop->currency .  "\n" .
+        $text = "Общая сумма: " . $sum_all . $shop->currency . "\n" .
         "Получатель: " . $client->first_name . "\n" .
         "Телефон: " . $client->phone . "\n" .
         "Адрес доставки: " . $client->address . "\n \n" .
@@ -749,7 +705,7 @@ class BotController extends Controller
             'chat_id' => $chat_id,
             'parse_mode' => 'HTML',
             'text' => $text,
-        ]);  
+        ]);
 
         foreach ($client->cart as $product) {
             Order::create([
@@ -760,7 +716,7 @@ class BotController extends Controller
                 'amount' => $product->amount,
             ]);
             $product->delete();
-       
+
         }
 
     }

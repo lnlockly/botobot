@@ -25,7 +25,7 @@ class OrdersTableView extends TableView
      */
     public function headers(): array
     {
-        return ['Товар', 'Активен', 'Количество', 'Общая стоимость'];
+        return ['Имя клиента', 'Номер', 'Адрес', 'Доставка', 'Товар', 'Количество', 'Общая стоимость', 'Активен',];
     }
 
     /**
@@ -36,10 +36,14 @@ class OrdersTableView extends TableView
     public function row($model): array
     {
         return [
+            $model->client->first_name,
+            $model->client->phone,
+            $model->client->address,
+            $model->client->delivery,
             $model->product->name,
-            UI::editable($model, 'active'),
             $model->amount,
-            $model->amount * $model->product->price
+            $model->amount * $model->product->price,
+            UI::editable($model, 'active'),
         ];
     }
 

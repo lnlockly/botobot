@@ -11,4 +11,8 @@ class Order extends Model
     public function product() {
         return $this->belongsTo(Catalog::class, 'catalog_id');
     }
+
+    public function client() {
+        return $this->belongsTo(Client::class);
+    }
 }
