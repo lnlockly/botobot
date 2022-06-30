@@ -199,6 +199,16 @@ class BotController extends Controller
         ]);
     }
 
+
+    private function getText($product, $shop) {
+        $text = "<a href='" . $product->img . "'>" . $product->name . "</a>" . "\n" .
+        $product->description . "\n" .
+        $product->url . "\n" .
+        'Цена:' . $product->price .  $shop->currency;
+    
+        return $text;   
+    }
+
     private function updateClient($bot, $shop, $client, $chat_id, $update_message)
     {
         $next = false;
@@ -377,10 +387,7 @@ class BotController extends Controller
 
         $keyboard = $this->makeInlineKeyboard($data);
 
-        $text = "<a href='" . $product->img . "'>" . $product->name . "</a>" . "\n" .
-        $product->description . "\n" .
-        $product->url . "\n" .
-        'Цена:' . $product->price . $shop->currency;
+        $text = $this->getText($product, $shop);
 
         $bot->sendMessage([
             'chat_id' => $chat_id,
@@ -440,10 +447,7 @@ class BotController extends Controller
 
                 $keyboard = $this->makeKeyboardForCart($product->id, $back, $next, $callback_message);
 
-                $text = "<a href='" . $product->img . "'>" . $product->name . "</a>" . "\n" .
-                $product->description . "\n" .
-                $product->url . "\n" .
-                'Цена:' . $product->price .  $shop->currency;
+                $text = $this->getText($product, $shop);
 
                 $bot->editMessageText([
                     'chat_id' => $chat_id,
@@ -472,10 +476,8 @@ class BotController extends Controller
 
                 $keyboard = $this->makeKeyboardForCart($product->id, $back, $next, $callback_message);
 
-                $text = "<a href='" . $product->img . "'>" . $product->name . "</a>" . "\n" .
-                $product->description . "\n" .
-                $product->url . "\n" .
-                'Цена:' . $product->price .  $shop->currency;
+               
+                $text = $this->getText($product, $shop);
 
                 $bot->editMessageText([
                     'chat_id' => $chat_id,
@@ -508,10 +510,7 @@ class BotController extends Controller
 
                 $keyboard = $this->makeKeyboardForCart($product->id, $back, $next, $callback_message);
 
-                $text = "<a href='" . $product->img . "'>" . $product->name . "</a>" . "\n" .
-                $product->description . "\n" .
-                $product->url . "\n" .
-                'Цена:' . $product->price .  $shop->currency;
+                $text = $this->getText($product, $shop);
 
                 $bot->editMessageText([
                     'chat_id' => $chat_id,
@@ -541,10 +540,7 @@ class BotController extends Controller
 
                 $keyboard = $this->makeKeyboardForCart($product->id, $back, $next, $callback_message);
 
-                $text = "<a href='" . $product->img . "'>" . $product->name . "</a>" . "\n" .
-                $product->description . "\n" .
-                $product->url . "\n" .
-                'Цена:' . $product->price .  $shop->currency;
+                $text = $this->getText($product, $shop);
 
                 $bot->editMessageText([
                     'chat_id' => $chat_id,
@@ -570,10 +566,7 @@ class BotController extends Controller
 
                 $keyboard = $this->makeKeyboardForCart($product->id, $back, $next, $callback_message);
 
-                $text = "<a href='" . $product->img . "'>" . $product->name . "</a>" . "\n" .
-                $product->description . "\n" .
-                $product->url . "\n" .
-                'Цена:' . $product->price .  $shop->currency;
+                $text = $this->getText($product, $shop);
 
                 $bot->editMessageText([
                     'chat_id' => $chat_id,
@@ -622,10 +615,7 @@ class BotController extends Controller
 
         $keyboard = $this->makeInlineKeyboard($data);
 
-        $text = "<a href='" . $product->img . "'>" . $product->name . "</a>" . "\n" .
-        $product->description . "\n" .
-        $product->url . "\n" .
-        'Цена:' . $product->price . $shop->currency;
+        $text = $this->getText($product, $shop);
 
         $bot->sendMessage([
             'chat_id' => $chat_id,
