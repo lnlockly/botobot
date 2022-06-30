@@ -55,8 +55,11 @@ class BotController extends Controller
         if (isset($message['message'])) {
             $client = $message['message']['chat'];
 
-        } else {
+        } elseif (isset($message['callback_query'])) {
             $client = $message['callback_query']['from'];
+        }
+        else {
+            return 'error';
         }
 
 
@@ -590,7 +593,7 @@ class BotController extends Controller
 
         $old_cart = Cart::where('catalog_id', ltrim($callback_query['data'], 'add'))->first();
 
-        if ($old_cart != null) {
+        if ($old_cart != null && $old_cart->client_id == $client->id) {
             $old_cart->update(['amount' => $old_cart->amount + 1]);
         } else {
             $cart = new Cart;
