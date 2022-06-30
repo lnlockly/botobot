@@ -224,6 +224,7 @@ class BotController extends Controller
 
             if ($all_session[1] == 'delivery') {
                 $this->sendOrder($bot, $shop, $client, $chat_id);
+                $client->update(['session_id' => null]);
             }
 
         } else {
