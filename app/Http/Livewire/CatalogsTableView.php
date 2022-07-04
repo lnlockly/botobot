@@ -17,7 +17,7 @@ class CatalogsTableView extends TableView
      */
     public function repository(): Builder
     {
-        return Catalog::query()->where('shop_id', auth()->user()->shop->id);
+        return Catalog::query()->where('shop_id', auth()->user()->current_shop->id);
     }
     /**
      * Sets the headers of the table as you want to be displayed
@@ -54,7 +54,7 @@ class CatalogsTableView extends TableView
     }
 
     public function update(Catalog $catalog, $data)
-    {   
+    {
         $catalog->update($data);
     }
 }

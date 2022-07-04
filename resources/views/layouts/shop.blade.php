@@ -14,7 +14,7 @@
     <!-- End plugin css for this page -->
     <!-- inject:css -->
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
-    
+
     <!-- endinject -->
     @laravelViewsStyles
 </head>
@@ -54,21 +54,18 @@
             </button>
             <ul class="navbar-nav navbar-nav-right">
                 <li class="nav-item nav-profile dropdown">
-                    @if (auth()->user()->shop != null)
-                    <a class="nav-link dropdown-toggle" href="https://t.me/{{ auth()->user()->shop->name }}" data-bs-toggle="dropdown" id="profileDropdown">
-                        <img src="images/faces/face28.jpg" alt="{{ auth()->user()->shop->name  }}" />
+                    @if (auth()->user()->current_shop != null)
+                    <a class="nav-link dropdown-toggle" href="https://t.me/{{ auth()->user()->current_shop->username }}"  data-toggle="dropdown" id="shopsDropdown">
+                        <img  img="test.png" alt="{{ auth()->user()->current_shop->username  }}" />
                     </a>
                     @endif
-                    <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="profileDropdown">
-                        <a class="dropdown-item">
-                            <i class="ti-settings text-primary"></i>
-                            Settings
-                        </a>
-                        <a class="dropdown-item">
-                            <i class="ti-power-off text-primary"></i>
-                            Logout
+                    @if (count(auth()->user()->shops) > 1 )
+                    <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="shopsDropdown">
+                        <a class="nav-link dropdown-toggle" href="{{ route('shop.switch') }}" data-toggle="dropdown" id="shopsDropdown">
+                            <img  alt="{{ auth()->user()->shops()->where('id', '!=', auth()->user()->current_shop->id)->first()->username  }}" />
                         </a>
                     </div>
+                        @endif
                 </li>
             </ul>
             <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button"
@@ -97,6 +94,13 @@
                         <span class="menu-title">Заказы</span>
                     </a>
                 </li>
+                @if(count(auth()->user()->shops) < 2)
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('shop.create') }}">
+                        <span class="menu-title">Добавить магазин</span>
+                    </a>
+                </li>
+                @endif
             </ul>
         </nav>
         <!-- partial -->
@@ -131,7 +135,7 @@
     <!-- End custom js for this page-->
 </body>
 <script>
-    $('#modal').modal('toggle'); 
+    $('#modal').modal('toggle');
 </script>
 
 </html>

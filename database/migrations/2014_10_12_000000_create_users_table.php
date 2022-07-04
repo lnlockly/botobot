@@ -18,6 +18,7 @@ class CreateUsersTable extends Migration
             $table->string('name');
             $table->string('username')->unique();
             $table->string('telegram_id')->default('0');
+            $table->integer('current_shop')->nullable();
             $table->boolean('is_admin')->default(false);
             $table->rememberToken();
             $table->timestamps();

@@ -34,11 +34,17 @@ Route::middleware('if_shop')->group(function () {
 
 	Route::get('/create', 'ShopController@index')->name('shop.create');
 
+    Route::get('/switch', function() {
+        $user = auth()->user();
+        $shop = $user->shops()->where('id', '!=', $user->current_shop->id)->first();
+        $user->update(['current_shop', $shop->id]);
+        return redirect()->back();
+    })->name('shop.switch');
 	Route::get('/catalog/create', 'CatalogController@create')->name('catalog.create');
 
-	Route::get('/statistic/users', 'ClientController@index')->name('statistic.users');
-
-	Route::get('/statistic/orders', 'OrderController@index')->name('statistic.orders');
+	Route::get('/statistic/users', function () {
+        return view('shop.statistic.clients');
+    })->name('statistic.users');
 
 	Route::get('/statistic/catalogs', function () {
 		return view('shop.statistic.catalogs');
@@ -47,10 +53,10 @@ Route::middleware('if_shop')->group(function () {
 	Route::get('/statistic/orders', function () {
 		return view('shop.statistic.orders');
 	})->name('statistic.orders');
-	
-	Route::post('/shop/save', 'ShopController@save')->name('shop.save');
 
-	Route::post('/catalogs/save', 'CatalogController@save')->name('catalog.save');
+	Route::post('/shop/save', 'ShopController@store')->name('shop.save');
+
+	Route::post('/catalogs/save', 'CatalogController@store')->name('catalog.save');
 
 	Route::post('/catalogs/import', 'CatalogController@import')->name('catalog.import');
 
@@ -64,7 +70,7 @@ Route::middleware('if_shop')->group(function () {
 	});
 });
 
-Route::group(['prefix' => 'admin','as' => 'admin.', 'middleware' => 'is_admin'], function(){ 
+Route::group(['prefix' => 'admin','as' => 'admin.', 'middleware' => 'is_admin'], function(){
 	Route::get('/users', 'AdminController@users')->name('users');
 	Route::get('/mailing', function () {
 		return view('admin.mailing');

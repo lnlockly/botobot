@@ -19,10 +19,10 @@ class IfShop
         if(!auth()->check()) {
             return redirect(route('login'));
         }
-        if(!isset(auth()->user()->shop) && ( Route::current()->getName() != "shop.create" && Route::current()->getName() != "shop.save")) {
+        if ((auth()->user()->current_shop == null) && ( Route::current()->getName() != "shop.create" && Route::current()->getName() != "shop.save")) {
             return redirect(route('shop.create'));
         }
-        if (isset(auth()->user()->shop) && (Route::current()->getName() == "shop.create" || Route::current()->getName() == "shop.save")) {
+        if ((count(auth()->user()->shops) == 2) && (Route::current()->getName() == "shop.create" || Route::current()->getName() == "shop.save")) {
             return redirect(route('statistic.users'));
         }
         return $next($request);

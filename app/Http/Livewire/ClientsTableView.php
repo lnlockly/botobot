@@ -41,6 +41,6 @@ class ClientsTableView extends TableView
      */
     public function repository(): Builder
     {
-        return Client::query()->where('shop_id', auth()->user()->shop->id);
+        return Client::query()->where('shop_id', auth()->user()->current_shop->id);
     }
 }

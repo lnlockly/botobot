@@ -48,7 +48,7 @@ class BotController extends Controller
         $response = $bot->getUpdates();
 
         $message = last($response);
-    
+
 
         $shop = auth()->user()->shop;
 
@@ -705,9 +705,12 @@ class BotController extends Controller
         $products . "\n" .
         "Доставка: " . $client->delivery;
 
+        $keyboard = $this->makeKeyboard(['Главное меню']);
+
         $bot->sendMessage([
             'chat_id' => $chat_id,
             'parse_mode' => 'HTML',
+            'reply_markup' => $keyboard,
             'text' => $text,
         ]);
 

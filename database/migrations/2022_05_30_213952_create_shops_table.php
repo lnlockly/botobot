@@ -16,6 +16,7 @@ class CreateShopsTable extends Migration
         Schema::create('shops', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            $table->string('username');
             $table->string('bot_token');
             $table->string('language');
             $table->string('currency');
