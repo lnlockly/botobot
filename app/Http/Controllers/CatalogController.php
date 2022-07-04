@@ -11,18 +11,13 @@ class CatalogController extends Controller
 {
 
 	public function index() {
-		$shop = auth()->user()->shop;
-
-		$catalogs = Catalog::where(['shop_id' => $shop->id]);
-
-		return view('shop.catalog.statistic', ['catalogs' => $catalogs]);
 	}
 
 	public function create() {
 		return view('shop/catalog/create');
 	}
 
-	public function save(Request $request) {
+	public function store(Request $request) {
 		$catalog = new Catalog;
 
 		$catalog->active = "1";
@@ -32,7 +27,7 @@ class CatalogController extends Controller
 		$catalog->url = $request->url;
 		$catalog->img = $request->img;
 		$catalog->price = $request->price;
-		$catalog->shop_id = auth()->user()->shop->id;
+		$catalog->shop_id = auth()->user()->current_shop->id;
 
 		$catalog->save();
 
@@ -41,7 +36,7 @@ class CatalogController extends Controller
 
     public function import(Request $request) {
     	$catalog = new Catalog;
- 
+
     	Excel::import(new CatalogsImport, storage_path('app/public/table.xlsx'));
     	return redirect()->back();
 

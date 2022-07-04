@@ -7,10 +7,5 @@ use Illuminate\Http\Request;
 class ClientController extends Controller
 {
     public function index() {
-        $shop = auth()->user()->shop;
-
-        $clients = $shop->clients;
-
-        return view('shop.statistic.clients', ['clients' => $clients]);
     }
 }

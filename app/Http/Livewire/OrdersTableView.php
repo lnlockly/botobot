@@ -16,7 +16,7 @@ class OrdersTableView extends TableView
      */
     public function repository(): Builder
     {
-        return Order::query()->where('shop_id', auth()->user()->shop->id);
+        return Order::query()->where('shop_id', auth()->user()->current_shop->id);
     }
     /**
      * Sets the headers of the table as you want to be displayed
@@ -48,7 +48,7 @@ class OrdersTableView extends TableView
     }
 
     public function update(Order $order, $data)
-    {   
+    {
         $order->update($data);
     }
 }
