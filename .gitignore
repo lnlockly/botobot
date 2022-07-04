@@ -10,4 +10,6 @@ Homestead.json
 Homestead.yaml
 npm-debug.log
 yarn-error.log
-
+composer.json
+/config/app.php
+/config/excel.php
