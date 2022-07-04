@@ -705,7 +705,8 @@ class BotController extends Controller
         $products . "\n" .
         "Доставка: " . $client->delivery;
 
-        $keyboard = $this->makeKeyboard(['Главное меню']);
+        $data = [['Главное меню']];
+        $keyboard = $this->makeKeyboard($data);
 
         $bot->sendMessage([
             'chat_id' => $chat_id,
