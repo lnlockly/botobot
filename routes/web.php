@@ -37,12 +37,14 @@ Route::middleware('if_shop')->group(function () {
     Route::get('/switch', function() {
         $user = auth()->user();
         $shop = $user->shops()->where('id', '!=', $user->current_shop->id)->first();
-
+        if ($shop == null) {
+            return  redirect()->back();
+        }
         $user->update(['current_shop' => $shop->id]);
         return redirect()->back();
     })->name('shop.switch');
-	Route::get('/catalog/create', 'CatalogController@create')->name('catalog.create');
 
+	Route::get('/catalog/create', 'CatalogController@create')->name('catalog.create');
 
 	Route::get('/statistic/users', function () {
         return view('shop.statistic.clients');
