@@ -43,6 +43,7 @@ Route::middleware('if_shop')->group(function () {
     })->name('shop.switch');
 	Route::get('/catalog/create', 'CatalogController@create')->name('catalog.create');
 
+
 	Route::get('/statistic/users', function () {
         return view('shop.statistic.clients');
     })->name('statistic.users');
