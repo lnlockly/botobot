@@ -48,17 +48,14 @@
                     class="me-2" alt="logo" /></a>
             <a class="navbar-brand brand-logo-mini" href="index.html"><img src="images/logo-mini.svg" alt="logo" /></a>
         </div>
-        <div class="navbar-menu-wrapper d-flex align-items-center justify-content-end">
-            
-
+        <div class="navbar-menu-wrapper d-flex align-items-center justify-content-end" style="word-wrap:break-word">
             <ul class="navbar-nav navbar-nav-right" style="margin-right:10px">
                 <li class="nav-item nav-profile dropdown" style="margin-right:10px">
                     @if (auth()->user()->current_shop != null)
                     <a class="nav-link dropdown-toggle" href="{{ route('shop.switch') }}" data-bs-toggle="dropdown" id="shopsDropdown" style="margin-right:10px">
-                        <img  img="test.png" alt="{{ auth()->user()->current_shop->username  }}" />
+                        <div class="nav-username">{{ auth()->user()->current_shop->username }}</div>
                     </a>
                     @endif
-
                 </li>
             </ul>
             <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button"
@@ -164,6 +161,7 @@
                 <div class="footer-link4">
                     <div class="footer-padding"><h1>Способы оплаты</h1></div>
                     <div class="footer-ul"> 
+                            
                             <a href="#">Подробнее о способах оплаты</a>
                             <ul>
                             <li><h6>ИП Иванцов А.А.</h6></li>
