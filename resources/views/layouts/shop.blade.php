@@ -14,7 +14,7 @@
     <!-- End plugin css for this page -->
     <!-- inject:css -->
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
-
+    <link rel="stylesheet" href="{{ asset('css/footer.css') }}">
     <!-- endinject -->
     @laravelViewsStyles
 </head>
@@ -126,6 +126,59 @@
     <script src="{{ asset('js/dashboard.js') }}"></script>
     <script src="{{ asset('js/app.js') }}"></script>
     <!-- End custom js for this page-->
+    <!-- footer -->
+    <footer>
+        <div class="wraper">
+            <div class="footer-block">
+                <div class="footer-logo">
+                    <h1>Спасибо что выбрали CHIPBOT.RU</h1>
+                </div>
+            </div>
+            <div class="footer-links">
+                <div class="footer-links-logo">
+                    
+                </div>
+                <div class="footer-link1">
+                    <div class="footer-padding"><h1>Chipbot</h1></div>
+                    <ul>
+                    <li><a href="#">О компании</a></li>          
+                    <li><a href="#">Контакты</a></li>
+                    <li><a href="#">Новости</a></li>
+                    <li><a href="#">Пользовательское соглашение</a></li>
+                    </ul>
+                </div>
+                <div class="footer-link2">
+                    <div class="footer-padding"><h1>Услуги</h1></div>
+                    <div class="footer-ul"><ul>
+                    <li><a href="#">Telegram магазина под ключ</a></li>
+                    <li><a href="#">Интеграция интернет-магазина с telegram</a></li>
+                    </ul></div>
+                </div>
+                <div class="footer-link3">
+                    <div class="footer-padding"><h1>Помощь</h1></div>
+                    <div class="footer-ul"><ul>
+                    <li><a href="#">База знаний</a></li>
+                    <li><a href="#">FAQ</a></li>
+                    </ul></div>
+                </div>
+                <div class="footer-link4">
+                    <div class="footer-padding"><h1>Способы оплаты</h1></div>
+                    <div class="footer-ul"> 
+                            <a href="#">Подробнее о способах оплаты</a>
+                            <ul>
+                            <li><h6>ИП Иванцов А.А.</h6></li>
+                            <li><h6>ИНН: 616806543687</h6></li>
+                            <li><h6>ОГРНИП:321619600227803</h6></li>
+                            <li><h6>ОКПО: 2012163842</h6></li>
+                            </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-made">
+                <h6>Сделано в РнД и КБР - 2022</h6>
+            </div>
+        </div>
+    </footer>
 </body>
 <script>
     $('#modal').modal('toggle');
