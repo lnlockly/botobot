@@ -44,7 +44,7 @@
 
     <nav class="navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
         <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center">
-            <a class="navbar-brand brand-logo me-5" href="index.html"><img src="{{ asset('/images/logo.jpg') }}"
+            <a class="navbar-brand brand-logo me-5" href="index.html"><img src="{{ asset('/images/icon.svg') }}"
                     class="me-2" alt="logo" /></a>
             <a class="navbar-brand brand-logo-mini" href="index.html"><img src="images/logo-mini.svg" alt="logo" /></a>
         </div>
@@ -70,18 +70,18 @@
         <nav class="sidebar sidebar-offcanvas" id="sidebar">
             <ul class="nav">
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('statistic.users') }}">
+                    <a class="nav-link" href="{{ route('statistic.users') }}"><img src="{{ asset('/images/user.svg') }}" alt="user-icon"/>
                         <span class="menu-title">Мои клиенты</span>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('statistic.catalogs') }}">
+                    <a class="nav-link" href="{{ route('statistic.catalogs') }}"><img src="{{ asset('/images/book.svg') }}" alt="shoping-icon"/>
                         <span class="menu-title">Мои товары, услуги</span>
                     </a>
                 </li>
                 
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('statistic.orders') }}">
+                    <a class="nav-link" href="{{ route('statistic.orders') }}"><img src="{{ asset('/images/invo.svg') }}" alt="invoice-icon"/>
                         <span class="menu-title">Мои заказы</span>
                     </a>
                 </li>
