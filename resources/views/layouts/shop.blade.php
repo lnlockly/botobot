@@ -48,7 +48,7 @@
                     class="me-2" alt="logo" /></a>
             <a class="navbar-brand brand-logo-mini" href="index.html"><img src="images/logo-mini.svg" alt="logo" /></a>
         </div>
-        <div class="navbar-menu-wrapper d-flex align-items-center justify-content-end" style="word-wrap:break-word">
+        <div class="navbar-menu-wrapper d-flex align-items-center justify-content-end">
             <ul class="navbar-nav navbar-nav-right" style="margin-right:10px">
                 <li class="nav-item nav-profile dropdown" style="margin-right:10px">
                     @if (auth()->user()->current_shop != null)
@@ -70,18 +70,19 @@
         <nav class="sidebar sidebar-offcanvas" id="sidebar">
             <ul class="nav">
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('statistic.catalogs') }}">
-                        <span class="menu-title">Мои товары</span>
+                    <a class="nav-link" href="{{ route('statistic.users') }}">
+                        <span class="menu-title">Мои клиенты</span>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('statistic.users') }}">
-                        <span class="menu-title">Клиенты</span>
+                    <a class="nav-link" href="{{ route('statistic.catalogs') }}">
+                        <span class="menu-title">Мои товары, услуги</span>
                     </a>
                 </li>
+                
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('statistic.orders') }}">
-                        <span class="menu-title">Заказы</span>
+                        <span class="menu-title">Мои заказы</span>
                     </a>
                 </li>
                 @if(count(auth()->user()->shops) < 2)
@@ -127,9 +128,6 @@
     <footer>
         <div class="wraper">
             <div class="footer-block">
-                <div class="footer-logo">
-                    <h1>Спасибо что выбрали CHIPBOT.RU</h1>
-                </div>
             </div>
             <div class="footer-links">
                 <div class="footer-links-logo">
@@ -171,9 +169,6 @@
                             </ul>
                     </div>
                 </div>
-            </div>
-            <div class="footer-made">
-                <h6>Сделано в РнД и КБР - 2022</h6>
             </div>
         </div>
     </footer>

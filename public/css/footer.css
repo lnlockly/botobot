@@ -1,6 +1,6 @@
 footer{
-    background: rgb(29, 31, 32);
-    color: white;
+    background: #BCD9FF;
+    color: rgb(0, 0, 0);
     padding-top: 0px;
     padding-bottom: 20px;
     
@@ -12,7 +12,7 @@ footer{
     padding-right: 180px;
     padding-top: 35px;
     font-size:x-large;
-    font-weight: 450;
+    font-weight: 400;
 }
 .footer-logo h1{
     font-size: 25px;
@@ -20,19 +20,15 @@ footer{
     text-align: center;
     padding-bottom: 10px;
     padding-top: 10px;
-    font-weight: 500;
+    font-weight: 670;
 }
-.footer-block{
-    background: rgba(60, 111, 252, 0.795);
-    border-top: 10px;
-}
-.footer-made{
+/* .footer-made{
     text-align: center;
     padding-top: 20px;
     font-weight:lighter;
     color: rgb(136, 139, 143);
-    font-size: xx-small;
-}
+    font-size: xx-small; */
+
 .footer-ul{
     color: rgb(153, 157, 160);
     font-size: xx-small;
@@ -51,4 +47,13 @@ footer{
 }
 .nav-username{
     word-break: break-word;
+    text-decoration:underline;
+    color: black;
+}
+.navbar .navbar-menu-wrapper{
+    background-color: #BCD9FF;
+}
+.navbar .navbar-brand-wrapper{
+    background-color: #BCD9FF;
+    ;
 }
