@@ -31,8 +31,8 @@ class CatalogController extends Controller
 		$catalog->shop_id = auth()->user()->current_shop->id;
 
 		$catalog->save();
-
-		return redirect(route('statistic.catalogs'))->with('message', 'Товар успешно добавлен');
+        notify()->success('Товар успешно добавлен!', '');
+		return redirect()->route('statistic.catalogs');
 	}
 
     public function import(Request $request) {

@@ -17,43 +17,22 @@
     <link rel="stylesheet" href="{{ asset('css/footer.css') }}">
     <!-- endinject -->
     @laravelViewsStyles
+    @notifyCss
 </head>
 
 <body>
-    <!-- partial:partials/_navbar.html -->
-    @if (Session::get('message') != null)
-    <div class="modal" id="modal" tabindex="-1" role="dialog" style="display:block">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Успех</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <p> {{ Session::get('message') }} </p>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрыть</button>
-                </div>
-            </div>
-        </div>
-    </div>
-    @endif
-
     <nav class="navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
         <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center">
-            <a class="navbar-brand brand-logo me-5" href="index.html"><img src="{{ asset('/images/icon.svg') }}"
+            <a class="navbar-brand brand-logo me-5"><img src="{{ asset('/images/icon.svg') }}"
                     class="me-2" alt="logo" /></a>
-            <a class="navbar-brand brand-logo-mini" href="index.html"><img src="images/logo-mini.svg" alt="logo" /></a>
+            <a class="navbar-brand brand-logo-mini"><img src="{{ asset('/images/icon.svg') }}" /></a>
         </div>
         <div class="navbar-menu-wrapper d-flex align-items-center justify-content-end">
             <ul class="navbar-nav navbar-nav-right" style="margin-right:10px">
                 <li class="nav-item nav-profile dropdown" style="margin-right:10px">
                     @if (auth()->user()->current_shop != null)
                     <a class="nav-link dropdown-toggle" href="{{ route('shop.switch') }}" data-bs-toggle="dropdown" id="shopsDropdown" style="margin-right:10px">
-                        <div class="nav-username">{{ auth()->user()->current_shop->username }}</div> 
+                        <div class="nav-username">{{ auth()->user()->current_shop->username }}</div>
                     </a>
                     <div class="id-username">Ваш ID: 23224</div>
                     @endif
@@ -80,7 +59,7 @@
                         <span class="menu-title">Мои товары, услуги</span>
                     </a>
                 </li>
-                
+
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('statistic.orders') }}"><img src="{{ asset('/images/invo.svg') }}" alt="invoice-icon"/>
                         <span class="menu-title">Мои заказы</span>
@@ -132,12 +111,12 @@
             </div>
             <div class="footer-links">
                 <div class="footer-links-logo">
-                    
+
                 </div>
                 <div class="footer-link1">
                     <div class="footer-padding"><h1>Chipbot</h1></div>
                     <ul>
-                    <li><a href="#">О компании</a></li>          
+                    <li><a href="#">О компании</a></li>
                     <li><a href="#">Контакты</a></li>
                     <li><a href="#">Новости</a></li>
                     <li><a href="#">Пользовательское соглашение</a></li>
@@ -159,8 +138,8 @@
                 </div>
                 <div class="footer-link4">
                     <div class="footer-padding"><h1>Способы оплаты</h1></div>
-                    <div class="footer-ul"> 
-                            
+                    <div class="footer-ul">
+
                             <a href="#">Подробнее о способах оплаты</a>
                             <ul>
                             <li><h6>ИП Иванцов А.А.</h6></li>
@@ -173,9 +152,15 @@
             </div>
         </div>
     </footer>
+    <x:notify-messages />
+    @notifyJs
+    <style>
+        .notify {
+            z-index: 1000000;
+            align-items: flex-end;
+        }
+    </style>
 </body>
-<script>
-    $('#modal').modal('toggle');
-</script>
+
 
 </html>

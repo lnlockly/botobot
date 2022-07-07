@@ -13,7 +13,7 @@ class StoreCatalogRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -29,7 +29,7 @@ class StoreCatalogRequest extends FormRequest
             'section1' => 'required|string|max:255',
             'url' => 'required|string|max:255',
             'img' => 'required|string|max:255',
-            'price' => 'required|number',
+            'price' => 'required|numeric',
         ];
     }
 }
