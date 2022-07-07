@@ -1,0 +1,77 @@
+footer{
+    background: #BCD9FF;
+    color: rgb(0, 0, 0);
+    padding-top: 0px;
+    padding-bottom: 20px;
+    
+}
+.footer-links{
+    display: flex;
+    justify-content: space-between;
+    padding-left: 180px;
+    padding-right: 180px;
+    padding-top: 35px;
+    font-size:x-large;
+    font-weight: 400;
+}
+.footer-logo h1{
+    font-size: 25px;
+    font-weight: 10px;
+    text-align: center;
+    padding-bottom: 10px;
+    padding-top: 10px;
+    font-weight: 670;
+}
+/* .footer-made{
+    text-align: center;
+    padding-top: 20px;
+    font-weight:lighter;
+    color: rgb(136, 139, 143);
+    font-size: xx-small; */
+
+.footer-ul{
+    color: rgb(153, 157, 160);
+    font-size: xx-small;
+}
+.footer-link1{
+    padding-right: 100px;
+}
+.footer-link2{
+    padding-right: 100px;
+}
+.footer-link3{
+    padding-right: 100px;
+}
+.footer-padding{
+    padding-bottom: 15px;
+}
+.nav-username{
+    word-break: break-word;
+    text-decoration:underline;
+    color: black;
+    padding-left: 20px;
+}
+.navbar .navbar-menu-wrapper{
+    background-color: #BCD9FF;
+}
+.navbar .navbar-brand-wrapper{
+    background-color: #BCD9FF;
+    ;
+}
+.nav-item{
+    padding-left: 30px;
+}
+.form-group{
+    padding-left: 18px;
+}
+.form-control{
+    border-radius: 7px;
+    border: 1px solid #C9CCD6
+}
+.button-css{
+    padding-left: 18px;
+}
+.load-img{
+    display: inline-flex;
+    width: 15px;
+}
