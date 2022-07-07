@@ -53,8 +53,9 @@
                 <li class="nav-item nav-profile dropdown" style="margin-right:10px">
                     @if (auth()->user()->current_shop != null)
                     <a class="nav-link dropdown-toggle" href="{{ route('shop.switch') }}" data-bs-toggle="dropdown" id="shopsDropdown" style="margin-right:10px">
-                        <div class="nav-username">{{ auth()->user()->current_shop->username }}</div>
+                        <div class="nav-username">{{ auth()->user()->current_shop->username }}</div> 
                     </a>
+                    <div class="id-username">Ваш ID: 23224</div>
                     @endif
                 </li>
             </ul>

@@ -49,6 +49,7 @@ footer{
     word-break: break-word;
     text-decoration:underline;
     color: black;
+    padding-left: 20px;
 }
 .navbar .navbar-menu-wrapper{
     background-color: #BCD9FF;
@@ -56,4 +57,21 @@ footer{
 .navbar .navbar-brand-wrapper{
     background-color: #BCD9FF;
     ;
+}
+.nav-item{
+    padding-left: 30px;
+}
+.form-group{
+    padding-left: 18px;
+}
+.form-control{
+    border-radius: 7px;
+    border: 1px solid #C9CCD6
+}
+.button-css{
+    padding-left: 18px;
+}
+.load-img{
+    display: inline-flex;
+    width: 15px;
 }
