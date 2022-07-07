@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreCatalogRequest;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Catalog;
@@ -17,7 +18,7 @@ class CatalogController extends Controller
 		return view('shop/catalog/create');
 	}
 
-	public function store(Request $request) {
+	public function store(StoreCatalogRequest $request) {
 		$catalog = new Catalog;
 
 		$catalog->active = "1";
@@ -35,10 +36,7 @@ class CatalogController extends Controller
 	}
 
     public function import(Request $request) {
-    	$catalog = new Catalog;
-
     	Excel::import(new CatalogsImport, storage_path('app/public/table.xlsx'));
     	return redirect()->back();
-
     }
 }
