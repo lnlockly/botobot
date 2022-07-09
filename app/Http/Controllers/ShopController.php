@@ -50,7 +50,8 @@ class ShopController extends Controller
 
         $telegram->setWebhook(['url' => 'https://chipbot.ru/'.$request->bot_token.'/webhook']);
 
-    	return redirect(route('statistic.catalogs'))->with('message', 'Магазин создан');
+        notify()->success('Магазин создан', '');
+    	return redirect()->route('statistic.catalogs');
     }
 
 }

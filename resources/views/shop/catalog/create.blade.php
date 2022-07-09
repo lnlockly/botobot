@@ -21,7 +21,7 @@
   </div>
 </div>
 @endif
- 
+
 <div class="grid-margin stretch-card">
     <div class="card">
         <div class="card-body">
@@ -30,6 +30,7 @@
             ) }}">
                 @csrf
                 <div class="form-group row">
+<<<<<<< HEAD
                     <div class="col-sm-5">
                         <label for="inputFirstname">Категория товара, услуги</label>
                         <input type="text" class="form-control" name="name" id="inputFirstname">
@@ -37,8 +38,14 @@
                     <div class="col-sm-1">
                       <label for=""></label>
                       <img src="{{ asset('/images/indo.svg') }}" class="me-info" alt="load" />
+=======
+                    <label for="name" >Категория товара, услуги</label>
+                    <div class="col-sm-5 ">
+                        <input type="text" class="form-control" name="name" id="section1">
+>>>>>>> f73cbe361c3757cb6a4e0411cea06c9610a3ae7a
                     </div>
                     <div class="col-sm-5">
+<<<<<<< HEAD
                         <label for="inputLastname">Описание товара, услуги</label>
                         <input type="text" class="form-control" id="description" name="discription">
                     </div>
@@ -48,6 +55,13 @@
                     </div>
                 </div>
                 <div class="form-group row">
+=======
+                        <input type="text" class="form-control" name="section1" id="name">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="description">Описание</label>
+>>>>>>> f73cbe361c3757cb6a4e0411cea06c9610a3ae7a
                     <div class="col-sm-5">
                         <label for="inputAddressLine1">Название товара, услуги</label>
                         <input type="text" class="form-control" id="inputAddressLine1" name="section1">

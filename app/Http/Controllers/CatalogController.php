@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreCatalogRequest;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Catalog;
@@ -17,7 +18,7 @@ class CatalogController extends Controller
 		return view('shop/catalog/create');
 	}
 
-	public function store(Request $request) {
+	public function store(StoreCatalogRequest $request) {
 		$catalog = new Catalog;
 
 		$catalog->active = "1";
@@ -30,15 +31,12 @@ class CatalogController extends Controller
 		$catalog->shop_id = auth()->user()->current_shop->id;
 
 		$catalog->save();
-
-		return redirect(route('statistic.catalogs'))->with('message', 'Товар успешно добавлен');
+        notify()->success('Товар успешно добавлен!', '');
+		return redirect()->route('statistic.catalogs');
 	}
 
     public function import(Request $request) {
-    	$catalog = new Catalog;
-
     	Excel::import(new CatalogsImport, storage_path('app/public/table.xlsx'));
     	return redirect()->back();
-
     }
 }
