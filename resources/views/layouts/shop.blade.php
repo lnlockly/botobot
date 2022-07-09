@@ -71,6 +71,11 @@
         <nav class="sidebar sidebar-offcanvas" id="sidebar">
             <ul class="nav">
                 <li class="nav-item">
+                    <a class="nav-link" href="{{ route('statistic.users') }}">
+                        <span class="menu-title">Добавить магазин</span><img src="{{ asset('/images/addshop.svg') }}" alt="user-icon"/>
+                    </a>
+                </li>
+                <li class="nav-item">
                     <a class="nav-link" href="{{ route('statistic.users') }}"><img src="{{ asset('/images/user.svg') }}" alt="user-icon"/>
                         <span class="menu-title">Мои клиенты</span>
                     </a>
@@ -87,7 +92,7 @@
                     </a>
                 </li>
                 @if(count(auth()->user()->shops) < 2)
-                <li class="nav-item">
+                <li class="nav-item1">
                     <a class="nav-link" href="{{ route('shop.create') }}">
                         <span class="menu-title">Добавить магазин</span>
                     </a>

@@ -30,45 +30,68 @@
             ) }}">
                 @csrf
                 <div class="form-group row">
-                    <label for="name" >Категория товара, услуги</label>
-                    <div class="col-sm-5 ">
-                        <input type="text" class="form-control" name="name" id="name">
+                    <div class="col-sm-5">
+                        <label for="inputFirstname">Категория товара, услуги</label>
+                        <input type="text" class="form-control" name="name" id="inputFirstname">
+                    </div>
+                    <div class="col-sm-1">
+                      <label for=""></label>
+                      <img src="{{ asset('/images/indo.svg') }}" class="me-info" alt="load" />
+                    </div>
+                    <div class="col-sm-5">
+                        <label for="inputLastname">Описание товара, услуги</label>
+                        <input type="text" class="form-control" id="description" name="discription">
+                    </div>
+                    <div class="col-sm-1">
+                      <label for=""></label>
+                      <img src="{{ asset('/images/indo.svg') }}" class="me-info" alt="load" />
                     </div>
                 </div>
                 <div class="form-group row">
-                    <label for="section1">Название товара,услуги</label>
                     <div class="col-sm-5">
-                        <input type="text" class="form-control" name="section1" id="section1">
+                        <label for="inputAddressLine1">Название товара, услуги</label>
+                        <input type="text" class="form-control" id="inputAddressLine1" name="section1">
                     </div>
+                    <div class="col-sm-1">
+                      <label for=""></label>
+                      <img src="{{ asset('/images/indo.svg') }}" class="me-info" alt="load" />
+                    </div>
+                    
                 </div>
                 <div class="form-group row">
-                    <label for="description">Цена товара</label>
                     <div class="col-sm-5">
-                        <input type="text" class="form-control" id="description" name="description">
-                    </div>
-                </div>
-                <div class="form-group row">
-                    <label for="url">Ссылка на товар, услугу</label>
-                    <div class="col-sm-5">
-                        <input type="text" class="form-control" id="url" name="url">
-                    </div>
-                </div>
-                <div class="form-group row">
-                    <label for="img">Ссылка на изображение товара, услуги</label>
-                    <div class="col-sm-5">
-                        <input type="text" class="form-control" id="img" name="img">
-                    </div>
-                </div>
-                <div class="form-group row">
-                    <label for="price">Цена товара</label>
-                    <div class="col-sm-5">
+                        <label for="price">Цена товара</label>
                         <input type="text" class="form-control" id="price" name="price">
                     </div>
+                    <div class="col-sm-1">
+                      <label for=""></label>
+                      <img src="{{ asset('/images/indo.svg') }}" class="me-info" alt="load" />
+                    </div>
                 </div>
-                <div class="button-css"><button type="submit" class="btn btn-primary me-2">Добавить товар</button>
-                    <button type="button" class="btn btn-outline-dark">Загрузить товары
-                        <div class="load-img"><img src="{{ asset('/images/load.svg') }}" class="me-2" alt="load" /></div>
-                </button>
+                <div class="form-group row">
+                    <div class="col-sm-5">
+                        <label for="img">Ссылка на изображение товара, услуги</label>
+                        <input type="text" class="form-control" id="img" name="img">
+                    </div>
+                    <div class="col-sm-1">
+                      <label for=""></label>
+                      <img src="{{ asset('/images/indo.svg') }}" class="me-info" alt="load" />
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-sm-5">
+                        <label for="inputContactNumber">Ссылка на товар, услугу</label>
+                        <input type="text" class="form-control" id="inputContactNumber" name="url">
+                    </div>
+                    <div class="col-sm-1">
+                      <label for=""></label>
+                      <img src="{{ asset('/images/indo.svg') }}" class="me-info" alt="load" />
+                    </div>
+                </div>
+                <div class="button-css"><button type="submit" class="btn btn-primary me-2">Добавить товар</button> <button type="button" class="btn btn-outline-primary">Загрузить товары
+                  <div class="load-img"><img src="{{ asset('/images/load.svg') }}" class="me-2" alt="load" /></div></button> 
+                  <a class="link-catalog" href="">Скачать структуру сайта<div class="img-catalog"><img src="{{ asset('/images/combo.svg') }}" alt="shoping-icon"/></a><a class="link-catalog" href="#"><div class="catalog-img"><img src="{{ asset('/images/indo.svg') }}" alt="shoping-icon"/></div></a></div></div>
+                   
                 </div>
             </form>
         </div>
