@@ -63,6 +63,7 @@ footer{
 }
 .form-group{
     padding-left: 18px;
+    
 }
 .form-control{
     border-radius: 7px;
@@ -73,5 +74,60 @@ footer{
 }
 .load-img{
     display: inline-flex;
-    width: 15px;
+    width: 12px;
+}
+.text-right{
+    padding-right: 800px;
+     
+}
+.form-group1{
+    position: relative;
+    left: 500px;
+    bottom: 400px;
+}
+.icon-img{
+    position: relative;
+    display: flex;
+}
+.input-icon-wrap {
+    border: 1px solid #ddd;    
+    display: flex;
+    flex-direction: row;
+  }
+  
+  .input-icon {
+    background: #ddd;
+  }
+  
+  .input-with-icon {
+    border: none;
+    flex: 1;
+  }
+  
+  .input-icon, .input-with-icon {
+    padding: 10px;
+  }
+.link-catalog{
+    padding-left: 10px;
+    text-decoration: underline;
+    color: #8d8d8d;
+    font-size: large;
+}
+.img-catalog{
+    display: inline-flex;
+    height: 18px;
+}
+.catalog-img{
+    display: inline-flex;
+    position: relative;
+    padding-left: 8px;
+    height: 25px;
+    padding-bottom: 4px;
+    
+}
+.nav-item1{
+    visibility: hidden;
+}
+.me-info{
+    padding-top: 20px;
 }
