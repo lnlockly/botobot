@@ -36,7 +36,14 @@ class CatalogController extends Controller
 	}
 
     public function import(Request $request) {
-    	Excel::import(new CatalogsImport, storage_path('app/public/table.xlsx'));
-    	return redirect()->back();
+        if ($request->file == null) {
+            notify()->error('Загрузите файл','');
+            return redirect()->back();
+        }
+        Catalog::where('id', auth()->user()->current_shop->id)->truncate();
+    	Excel::import(new CatalogsImport, $request->file);
+
+        notify()->success('Товары успешно добавлены', '');
+    	return redirect(route('statistic.catalogs'));
     }
 }

@@ -49938,3 +49938,6 @@ module.exports = __webpack_require__(/*! /home/kostergg/botobot/resources/sass/a
 /***/ })
 
 /******/ });
+$(function () {
+  $('[data-toggle="popover"]').popover()
+})

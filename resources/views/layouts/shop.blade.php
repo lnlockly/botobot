@@ -31,10 +31,15 @@
             <ul class="navbar-nav navbar-nav-right" style="margin-right:10px">
                 <li class="nav-item nav-profile dropdown" style="margin-right:10px">
                     @if (auth()->user()->current_shop != null)
-                    <a class="nav-link dropdown-toggle" href="{{ route('shop.switch') }}" data-bs-toggle="dropdown" id="shopsDropdown" style="margin-right:10px">
+                    <a class="nav-link dropdown-toggle"  data-toggle="dropdown" id="shopsDropdown" style="margin-right:10px">
                         <div class="nav-username">{{ auth()->user()->current_shop->username }}</div>
                     </a>
-                    <div class="id-username">Ваш ID: 23224</div>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <a class="nav-link dropdown-item" href="{{ route('shop.switch') }}"  style="margin-right:10px">
+                                <div class="nav-username">{{ auth()->user()->shops()->where('id', '!=',  auth()->user()->current_shop->id)->first()->username }}</div>
+                            </a>
+                        </div>
+                    <div class="id-username">Ваш ID: {{ auth()->user()->id }}</div>
                     @endif
                 </li>
             </ul>
@@ -50,7 +55,7 @@
         <nav class="sidebar sidebar-offcanvas" id="sidebar">
             <ul class="nav">
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('statistic.users') }}">
+                    <a class="nav-link" href="{{ route('shop.create') }}">
                         <span class="menu-title">Добавить магазин</span><img src="{{ asset('/images/addshop.svg') }}" alt="user-icon"/>
                     </a>
                 </li>

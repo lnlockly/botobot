@@ -19,7 +19,9 @@ use App\User;
 Auth::routes();
 
 Route::post('/{token}/webhook', 'BotController@index');
-
+Route::get('/', function() {
+    return redirect('http://xn----9sbuzdjmk2a.org');
+});
 
 Route::get('/getUpdates', 'BotController@longpull');
 
@@ -62,7 +64,11 @@ Route::middleware('if_shop')->group(function () {
 
 	Route::post('/catalogs/save', 'CatalogController@store')->name('catalog.save');
 
-	Route::post('/catalogs/import', 'CatalogController@import')->name('catalog.import');
+    Route::get('/catalogs/import/create', function() {
+        return view('shop.catalog.import');
+    })->name('shop.import.create');
+
+	Route::post('/catalogs/import', 'CatalogController@import')->name('shop.import.store');
 
 	Route::post('/bot/{token}/webhook', 'ShopController@bot')->name('shop.bot');
 
