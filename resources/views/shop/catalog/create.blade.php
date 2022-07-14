@@ -10,7 +10,6 @@
                 <div class="form-group row">
                     <div class="col-sm-5">
                         <label for="section1">Категория товара, услуги</label>
-<<<<<<< HEAD
                         <input type="text" class="form-control" name="section1" id="section1">
                     </div>
                     <div class="col-sm-1">
@@ -18,25 +17,15 @@
                       <img src="{{ asset('/images/indo.svg') }}" class="me-info" alt="load" data-toggle="popover" title="Информация" data-content="ИНФОРМАЦИЯ"/>
                     </div>
                     <div class="col-sm-5">
-=======
-                        <input type="text" class="form-control" name="section1" id="inputFirstname">
-                    </div>
-                    <div class="col-sm-1">
-                      <label for=""></label>
-                      <img src="{{ asset('/images/indo.svg') }}" class="me-info" alt="load" />
 
-                    <div class="col-sm-5">D
->>>>>>> main
                         <label for="name">Название товара услуги</label>
                         <input type="text" class="form-control" id="name" name="name">
                     </div>
                     <div class="col-sm-1">
                       <label for=""></label>
-<<<<<<< HEAD
+
                       <img src="{{ asset('/images/indo.svg') }}" class="me-info" alt="load" data-toggle="popover" title="Информация" data-content="ИНФОРМАЦИЯ" />
-=======
-                      <img src="{{ asset('/images/indo.svg') }}" class="me-info" alt="load" />
->>>>>>> main
+
                     </div>
                 </div>
                 <div class="form-group row">
@@ -87,8 +76,6 @@
                         <div class="img-catalog"><img src="{{ asset('/images/combo.svg') }}" alt="shoping-icon"/></div>
                     </a>
                         <div class="catalog-img"><img src="{{ asset('/images/indo.svg') }}" alt="shoping-icon" data-toggle="popover" title="Информация" data-content="ИНФОРМАЦИЯ"/></div>
-
-                </div>
                 </div>
             </form>
         </div>
