@@ -204,9 +204,9 @@ class BotController extends Controller
     private function getText($product, $shop)
     {
         $text = "<a href='" . $product->img . "'>" . $product->name . "</a>" . "\n" .
-        $product->description . "\n" .
-        $product->url . "\n" .
-        'Цена:' . $product->price . $shop->currency;
+             $product->description . "\n" .
+            'Цена:' . $product->price . $shop->currency . "\n" .
+             $product->url . "\n";
 
         return $text;
     }

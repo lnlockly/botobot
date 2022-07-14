@@ -65,13 +65,13 @@
                       <img src="{{ asset('/images/indo.svg') }}" class="me-info" alt="load" data-toggle="popover" title="Информация" data-content="ИНФОРМАЦИЯ" />
                     </div>
                 </div>
-                <div class="button-css"><button type="submit" class="btn btn-primary me-2">Добавить товар</button> <button type="button" class="btn btn-outline-primary">Загрузить товары
-                    <div class="load-img"><img src="{{ asset('/images/load.svg') }}" class="me-2" alt="load" /></div></button>
-                    <a class="link-catalog" href="">Скачать структуру сайта
+                <div class="button-css"><button type="submit" class="btn btn-primary me-2">Добавить товар</button>
+                    <a type="button" class="btn btn-outline-primary" href="{{ route('shop.import.create') }}">Загрузить товары
+                    <div class="load-img"><img src="{{ asset('/images/load.svg') }}" class="me-2" alt="load" /></div></a>
+                    <a class="link-catalog" href="/download/chipbot.xlsx">Скачать структуру таблицы
                         <div class="img-catalog"><img src="{{ asset('/images/combo.svg') }}" alt="shoping-icon"/></div>
                     </a>
                         <div class="catalog-img"><img src="{{ asset('/images/indo.svg') }}" alt="shoping-icon" data-toggle="popover" title="Информация" data-content="ИНФОРМАЦИЯ"/></div>
-                </div>
                 </div>
             </form>
         </div>
