@@ -1,10 +1,10 @@
 @extends('layouts.shop')
 @section('content')
-<div class="grid-margin stretch-card">
-    <div class="card">
-        <div class="card-body">
-            <h4 class="card-title">Добавить товар</h4>
-            <form class="form-inline" method="post" action="{{ route('catalog.save'
+    <div class="grid-margin stretch-card">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">Добавить товар</h4>
+                <form class="form-inline" method="post" action="{{ route('catalog.save'
             ) }}">
                 @csrf
                 <div class="form-group row">
@@ -80,5 +80,4 @@
             </form>
         </div>
     </div>
-</div>
 @endsection
