@@ -34,13 +34,15 @@
                     <a class="nav-link dropdown-toggle"  data-toggle="dropdown" id="shopsDropdown" style="margin-right:10px">
                         <div class="nav-username">{{ auth()->user()->current_shop->username }}</div>
                     </a>
-                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                            <a class="nav-link dropdown-item" href="{{ route('shop.switch') }}"  style="margin-right:10px">
-                                <div class="nav-username">{{ auth()->user()->shops()->where('id', '!=',  auth()->user()->current_shop->id)->first()->username }}</div>
-                            </a>
-                        </div>
-                    <div class="id-username">Ваш ID: {{ auth()->user()->id }}</div>
+                        @if (count(auth()->user()->shops) > 1 ) 
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                <a class="nav-link dropdown-item" href="{{ route('shop.switch') }}"  style="margin-right:10px">
+                                    <div class="nav-username">{{ auth()->user()->shops()->where('id', '!=',  auth()->user()->current_shop->id)->first()->username }}</div>
+                                </a>
+                            </div>
+                        @endif
                     @endif
+                    <div class="id-username">Ваш ID: {{ auth()->user()->id }}</div>
                 </li>
             </ul>
             <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button"
