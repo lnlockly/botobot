@@ -20,8 +20,11 @@
     <!-- partial:partials/_navbar.html -->
     <nav class="navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
       <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center">
-        <a class="navbar-brand brand-logo me-5" href="index.html"><img src="{{http://127.0.0.1:8000/images/logo.jpgу }}" class="me-2" alt="logo"/></a>
-        <a class="navbar-brand brand-logo-mini" href="index.html"><img src="images/logo-mini.svg" alt="logo"/></a>
+          <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center">
+              <a class="navbar-brand brand-logo me-5"><img src="{{ asset('/images/icon.svg') }}"
+                                                           class="me-2" alt="logo" /></a>
+              <a class="navbar-brand brand-logo-mini"><img src="{{ asset('/images/icon.svg') }}" /></a>
+          </div>
       </div>
       <div class="navbar-menu-wrapper d-flex align-items-center justify-content-end">
         <button class="navbar-toggler navbar-toggler align-self-center" type="button" data-toggle="minimize">
@@ -188,20 +191,55 @@
       <!-- main-panel ends -->
     </div>
     <!-- page-body-wrapper ends -->
-  </div>
-  <!-- container-scroller -->
 
-  <!-- plugins:js -->
-  <script src="vendors/base/vendor.bundle.base.js"></script>
+    <footer>
+        <div class="wraper">
+            <div class="footer-block">
+            </div>
+            <div class="footer-links">
+                <div class="footer-links-logo">
 
-  <!-- inject:js -->
-  <script src="{{ asset('js/off-canvas.js') }}"></script>
-  <script src="{{ asset('js/hoverable-collapse.js') }}"></script>
-  <script src="{{ asset('js/template.js') }}"></script>
-  <!-- endinject -->
-  <!-- Custom js for this page-->
-  <script src="{{ asset('js/dashboard.js') }}"></script>
-  <!-- End custom js for this page-->
+                </div>
+                <div class="footer-link1">
+                    <div class="footer-padding"><h1>Chipbot</h1></div>
+                    <ul>
+                        <li><a href="#">О компании</a></li>
+                        <li><a href="#">Контакты</a></li>
+                        <li><a href="#">Новости</a></li>
+                        <li><a href="#">Пользовательское соглашение</a></li>
+                    </ul>
+                </div>
+                <div class="footer-link2">
+                    <div class="footer-padding"><h1>Услуги</h1></div>
+                    <div class="footer-ul"><ul>
+                            <li><a href="#">Telegram магазина под ключ</a></li>
+                            <li><a href="#">Интеграция интернет-магазина с telegram</a></li>
+                        </ul></div>
+                </div>
+                <div class="footer-link3">
+                    <div class="footer-padding"><h1>Помощь</h1></div>
+                    <div class="footer-ul"><ul>
+                            <li><a href="#">База знаний</a></li>
+                            <li><a href="#">FAQ</a></li>
+                        </ul></div>
+                </div>
+                <div class="footer-link4">
+                    <div class="footer-padding"><h1>Способы оплаты</h1></div>
+                    <div class="footer-ul">
+
+                        <a href="#">Подробнее о способах оплаты</a>
+                        <ul>
+                            <li><h6>ИП Иванцов А.А.</h6></li>
+                            <li><h6>ИНН: 616806543687</h6></li>
+                            <li><h6>ОГРНИП:321619600227803</h6></li>
+                            <li><h6>ОКПО: 2012163842</h6></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
 </body>
 
 </html>

@@ -40,7 +40,9 @@ class CatalogController extends Controller
             notify()->error('Загрузите файл','');
             return redirect()->back();
         }
-        Catalog::where('id', auth()->user()->current_shop->id)->truncate();
+        foreach (Catalog::where('shop_id', auth()->user()->current_shop->id)->get() as $catalog ) {
+            $catalog->delete();
+        }
     	Excel::import(new CatalogsImport, $request->file);
 
         notify()->success('Товары успешно добавлены', '');

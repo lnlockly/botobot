@@ -34,7 +34,7 @@
                     <a class="nav-link dropdown-toggle"  data-toggle="dropdown" id="shopsDropdown" style="margin-right:10px">
                         <div class="nav-username">{{ auth()->user()->current_shop->username }}</div>
                     </a>
-                        @if (count(auth()->user()->shops) > 1 ) 
+                        @if (count(auth()->user()->shops) > 1 )
                             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                 <a class="nav-link dropdown-item" href="{{ route('shop.switch') }}"  style="margin-right:10px">
                                     <div class="nav-username">{{ auth()->user()->shops()->where('id', '!=',  auth()->user()->current_shop->id)->first()->username }}</div>
@@ -101,7 +101,6 @@
         <!-- main-panel ends -->
     </div>
     <!-- page-body-wrapper ends -->
-    </div>
     <!-- container-scroller -->
     @laravelViewsScripts
     <!-- plugins:js -->
