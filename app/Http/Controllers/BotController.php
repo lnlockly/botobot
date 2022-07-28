@@ -314,7 +314,7 @@ class BotController extends Controller
     private function sendStartMessage($bot, $shop, $chat_id)
     {
         $data = [
-            ['Товары', 'Корзина'], ['Главное меню'], ['Настройки'],
+            ['🍴 Товары', '🛍 Корзина'], ['🏠 Главное меню'], ['⚙ Настройки'],
         ];
         $keyboard = $this->makeKeyboard($data);
 
