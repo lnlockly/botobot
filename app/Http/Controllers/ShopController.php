@@ -50,7 +50,12 @@ class ShopController extends Controller
 
         $telegram->setWebhook(['url' => 'https://chipbot.ru/'.$request->bot_token.'/webhook']);
 
-        notify()->success('Магазин создан', '');
+        if (count(auth()->user()->shops) == 2 ) {
+            notify()->success('Вы создали максимально количество магазинов (2)', '');
+        }
+        else {
+            notify()->success('Магазин создан', '');
+        }
     	return redirect()->route('statistic.catalogs');
     }
 

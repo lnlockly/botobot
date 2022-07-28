@@ -58,16 +58,6 @@
                       <img src="{{ asset('/images/indo.svg') }}" class="me-info" alt="load" data-toggle="popover" title="Информация" data-content="ИНФОРМАЦИЯ"  />
                     </div>
                 </div>
-                <div class="form-group row">
-                    <div class="col-sm-5">
-                        <label for="url">Ссылка на товар, услугу</label>
-                        <input type="text" class="form-control" id="url" name="url">
-                    </div>
-                    <div class="col-sm-1">
-                      <label for=""></label>
-                      <img src="{{ asset('/images/indo.svg') }}" class="me-info" alt="load" data-toggle="popover" title="Информация" data-content="ИНФОРМАЦИЯ" />
-                    </div>
-                </div>
 
                 <div class="button-css"><button type="submit" class="btn btn-primary me-2">Добавить товар</button>
                     <a type="button" class="btn btn-outline-primary" href="{{ route('shop.import.create') }}">Загрузить товары

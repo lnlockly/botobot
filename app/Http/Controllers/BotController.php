@@ -84,7 +84,7 @@ class BotController extends Controller
         $reply_markup = Keyboard::make([
             'keyboard' => $data,
             'resize_keyboard' => true,
-            'one_time_keyboard' => false,
+            'one_time_keyboard' => true,
         ]);
 
         return $reply_markup;
@@ -105,19 +105,18 @@ class BotController extends Controller
                 $this->updateClient($bot, $shop, $client_db, $chat_id, $message_text);
             }
             switch ($message_text) {
+                case '🏠':
+                case '🏠 Главное меню':
                 case '/start':
                     $this->sendStartMessage($bot, $shop, $chat_id);
                     break;
-                case 'Товары':
+                case '🍴 Товары':
                     $this->sendCatalogs($bot, $shop, $chat_id);
                     break;
-                case 'Главное меню':
-                    $this->sendStartMessage($bot, $shop, $chat_id);
-                    break;
-                case 'Корзина':
+                case '🛍 Корзина':
                     $this->sendCart($bot, $shop, $client, $chat_id);
                     break;
-                case 'Настройки':
+                case '⚙️Настройки':
                     $this->sendSettings($bot, $shop, $chat_id);
                     break;
                 case 'Имя':
@@ -385,6 +384,7 @@ class BotController extends Controller
 
         $data = [
             [Keyboard::inlineButton(['callback_data' => 'add' . $product->id, 'text' => 'Добавить в корзину'])],
+            [Keyboard::inlineButton(['text' => 'Создать магазин', 'url' => 'https://chipbot.ru/'])],
         ];
 
         $keyboard = $this->makeInlineKeyboard($data);
