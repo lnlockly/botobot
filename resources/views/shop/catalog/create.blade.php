@@ -68,6 +68,7 @@
                         <div class="catalog-img"><img src="{{ asset('/images/indo.svg') }}" alt="shoping-icon" data-toggle="popover" title="Информация" data-content="ИНФОРМАЦИЯ"/></div>
                 </div>
             </form>
+            </div>
         </div>
     </div>
 @endsection
