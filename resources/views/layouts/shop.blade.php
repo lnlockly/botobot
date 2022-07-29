@@ -31,9 +31,9 @@
             <ul class="navbar-nav navbar-nav-right" style="margin-right:10px">
                 <li class="nav-item nav-profile dropdown" style="margin-right:10px">
                     @if (auth()->user()->current_shop != null)
-                    <a class="nav-link dropdown-toggle"  data-toggle="dropdown" id="shopsDropdown" style="margin-right:10px">
-                        <div class="nav-username">{{ auth()->user()->current_shop->username }}</div>
-                    </a>
+                        <a class="nav-link dropdown-toggle"  data-toggle="dropdown" id="shopsDropdown" style="margin-right:10px">
+                            <div class="nav-username">{{ auth()->user()->current_shop->username }}</div>
+                        </a>
                         @if (count(auth()->user()->shops) > 1 )
                             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                 <a class="nav-link dropdown-item" href="{{ route('shop.switch') }}"  style="margin-right:10px">
@@ -56,7 +56,7 @@
         <!-- partial:partials/_sidebar.html -->
         <nav class="sidebar sidebar-offcanvas" id="sidebar">
             <ul class="nav">
-                @if (count(auth()->user()->shops) == 2)
+                @if (count(auth()->user()->shops) < 2)
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('shop.create') }}">
                             <span class="menu-title">Добавить магазин</span><img src="{{ asset('/images/addshop.svg') }}" alt="user-icon"/>
@@ -79,13 +79,6 @@
                         <span class="menu-title">Мои заказы</span>
                     </a>
                 </li>
-                @if(count(auth()->user()->shops) < 2)
-                <li class="nav-item1">
-                    <a class="nav-link" href="{{ route('shop.create') }}">
-                        <span class="menu-title">Добавить магазин</span>
-                    </a>
-                </li>
-                @endif
             </ul>
         </nav>
         <!-- partial -->
