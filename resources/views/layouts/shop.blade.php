@@ -104,7 +104,7 @@
     </div>
     <!-- page-body-wrapper ends -->
     <!-- container-scroller -->
-    @laravelViewsScripts
+
     <!-- plugins:js -->
     <script src="vendors/base/vendor.bundle.base.js"></script>
 
@@ -173,6 +173,7 @@
             align-items: flex-end;
         }
     </style>
+    @laravelViewsScripts
 </body>
 
 
