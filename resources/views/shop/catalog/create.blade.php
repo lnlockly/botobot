@@ -16,15 +16,18 @@
                       <label for=""></label>
                       <img src="{{ asset('/images/indo.svg') }}" class="me-info" alt="load" data-toggle="popover" title="Информация" data-content="ИНФОРМАЦИЯ"/>
                     </div>
+
+                </div>
+                <div class="form-group row">
                     <div class="col-sm-5">
 
                         <label for="name">Название товара услуги</label>
                         <input type="text" class="form-control" id="name" name="name">
                     </div>
                     <div class="col-sm-1">
-                      <label for=""></label>
+                        <label for=""></label>
 
-                      <img src="{{ asset('/images/indo.svg') }}" class="me-info" alt="load" data-toggle="popover" title="Информация" data-content="ИНФОРМАЦИЯ" />
+                        <img src="{{ asset('/images/indo.svg') }}" class="me-info" alt="load" data-toggle="popover" title="Информация" data-content="ИНФОРМАЦИЯ" />
 
                     </div>
                 </div>
