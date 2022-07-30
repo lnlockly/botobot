@@ -27,8 +27,7 @@ class StoreCatalogRequest extends FormRequest
             'name' => 'required|string|max:255',
             'description' => 'required|string|max:255',
             'section1' => 'required|string|max:255',
-            'url' => 'string|max:255',
-            'img' => 'required|string|max:255',
+            'img' => 'string|max:255',
             'price' => 'required|numeric',
         ];
     }

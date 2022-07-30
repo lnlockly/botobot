@@ -110,10 +110,10 @@ class BotController extends Controller
                 case '/start':
                     $this->sendStartMessage($bot, $shop, $chat_id);
                     break;
-                case '🍴 Товары':
+                case '🛍 Товары':
                     $this->sendCatalogs($bot, $shop, $chat_id);
                     break;
-                case '🛍 Корзина':
+                case '🛒 Корзина':
                     $this->sendCart($bot, $shop, $client, $chat_id);
                     break;
                 case '⚙️Настройки':
@@ -314,7 +314,7 @@ class BotController extends Controller
     private function sendStartMessage($bot, $shop, $chat_id)
     {
         $data = [
-            ['🍴 Товары', '🛍 Корзина'], ['🏠 Главное меню'], ['⚙ Настройки'],
+            ['🛍 Товары', '🛒 Корзина'], ['🏠 Главное меню'], ['⚙ Настройки'],
         ];
         $keyboard = $this->makeKeyboard($data);
 
