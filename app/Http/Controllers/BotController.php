@@ -354,7 +354,7 @@ class BotController extends Controller
 
         $bot->sendMessage([
             'chat_id' => $chat_id,
-            'text' => 'Выберите товары',
+            'text' => 'Выберите категорию',
             'reply_markup' => $keyboard,
         ]);
 
