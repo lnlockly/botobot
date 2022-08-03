@@ -28,7 +28,6 @@ class CatalogsImport implements ToModel, WithHeadingRow
             'description' => $row['opisanie'],
             'price' => $row['cena'],
             'img' => $row['izobrazenie'],
-            'url' => $row['ssylka_na_tovar'],
             'shop_id' => $shop->id
         ]);
     }
