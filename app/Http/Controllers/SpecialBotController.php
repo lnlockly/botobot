@@ -101,7 +101,7 @@ class SpecialBotController extends Controller
         $bot->sendPhoto([
             'chat_id' => $chat_id,
             'photo' => new InputFile('https://chipbot.ru/images/special.jpg'),
-            'caption' => '1 экран',
+            'caption' => 'Инструмен для продвижения ваших услуг или товаров. Продукт для ваших клиентов, который позволит открыть новые каналы продаж.',
             'reply_markup' => $keyboard,
         ]);
     }
@@ -110,7 +110,7 @@ class SpecialBotController extends Controller
         $data = [
 
                 [Keyboard::inlineButton(['text' => 'Наш сайт', 'url' => 'https://chipbot.ru/'])],
-                [Keyboard::inlineButton(['callback_data' => 'sendAdvantage', 'text' => 'Приемущества'])],
+                [Keyboard::inlineButton(['callback_data' => 'sendAdvantage', 'text' => 'Преимущества'])],
 
 
                 [Keyboard::inlineButton(['callback_data' => 'sendName', 'text' => 'Попробовать'])],
@@ -118,9 +118,10 @@ class SpecialBotController extends Controller
         ];
         $keyboard = $this->makeInlineKeyboard($data);
 
-        $bot->sendMessage([
+        $bot->sendPhoto([
             'chat_id' => $chat_id,
-            'text' => '2 экран',
+            'photo' => new InputFile('https://chipbot.ru/images/special.jpg'),
+            'caption' => 'Сервис, в котором за 5-10 минут вы создадите каталог услуг или магазин. Принимайте заяки, оплату: всё в одном сервисе.',
             'reply_markup' => $keyboard,
         ]);
     }
@@ -131,9 +132,10 @@ class SpecialBotController extends Controller
 
         $keyboard = $this->makeInlineKeyboard($data);
 
-        $bot->sendMessage([
+        $bot->sendPhoto([
             'chat_id' => $chat_id,
-            'text' => 'приемущ',
+            'photo' => new InputFile('https://chipbot.ru/images/special.jpg'),
+            'caption' => 'Быстрая регистрация. Удобная панель управления настройками. Получай завки и заказы в одном сервисе.',
             'reply_markup' => $keyboard,
         ]);
     }

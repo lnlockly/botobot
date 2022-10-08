@@ -1,4 +1,4 @@
-@extends('layouts.shop')
+@extends('layouts.admin')
 @section('content')
     <div class="col-lg-12">
         <div class="card">

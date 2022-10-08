@@ -52,6 +52,11 @@
                     <span class="menu-title">Рассылка</span>
                 </a>
             </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{ route('admin.subscribers') }}">
+                    <span class="menu-title">Реклама</span>
+                </a>
+            </li>
         </ul>
     </nav>
     <!-- partial -->
