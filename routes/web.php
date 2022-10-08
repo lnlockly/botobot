@@ -19,6 +19,7 @@ use App\User;
 Auth::routes();
 
 Route::post('/{token}/webhook', 'BotController@index');
+Route::post('/specialWebhook', 'SpecialBotController@index');
 Route::get('/', function() {
     return redirect('http://xn----9sbuzdjmk2a.org');
 });
