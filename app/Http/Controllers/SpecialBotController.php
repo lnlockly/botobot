@@ -10,9 +10,9 @@ use Telegram\Bot\Keyboard\Keyboard;
 
 class SpecialBotController extends Controller
 {
-    public function index()
+    public function index($token)
     {
-        $bot = new Api('5451416059:AAEdKASU3cksZ67ra6eR6ZRIFgjiFb9xWVk');
+        $bot = new Api($token);
 
         $updates = $bot->getWebhookUpdates();
 
