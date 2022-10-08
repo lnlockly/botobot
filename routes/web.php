@@ -23,7 +23,7 @@ Route::get('/', function() {
     return redirect('http://xn----9sbuzdjmk2a.org');
 });
 
-Route::get('/getUpdates', 'BotController@longpull');
+Route::get('/getUpdates', 'SpecialBotController@longpull');
 
 Route::get('/telegram/callback', 'Auth\TelegramAuth@callback');
 
@@ -82,6 +82,9 @@ Route::middleware('if_shop')->group(function () {
 
 Route::group(['prefix' => 'admin','as' => 'admin.', 'middleware' => 'is_admin'], function(){
 	Route::get('/users', 'AdminController@users')->name('users');
+    Route::get('/subscribers', function() {
+        return view('admin.subscribers');
+    })->name('subscribers');
 	Route::get('/mailing', function () {
 		return view('admin.mailing');
 	})->name('mailing.create');
