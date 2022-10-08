@@ -97,9 +97,10 @@ class SpecialBotController extends Controller
 
         $keyboard = $this->makeInlineKeyboard($data);
 
-        $bot->sendMessage([
+        $bot->sendPhoto([
             'chat_id' => $chat_id,
-            'text' => '1 экран',
+            'photo' => 'https://chipbot.ru/images/special.jpg',
+            'caption' => '1 экран',
             'reply_markup' => $keyboard,
         ]);
     }
