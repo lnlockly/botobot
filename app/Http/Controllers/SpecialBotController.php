@@ -6,6 +6,7 @@ use App\Client;
 use App\Subscriber;
 use Illuminate\Http\Request;
 use Telegram\Bot\Api;
+use Telegram\Bot\FileUpload\InputFile;
 use Telegram\Bot\Keyboard\Keyboard;
 
 class SpecialBotController extends Controller
@@ -99,7 +100,7 @@ class SpecialBotController extends Controller
 
         $bot->sendPhoto([
             'chat_id' => $chat_id,
-            'photo' => 'https://chipbot.ru/images/special.jpg',
+            'photo' => new InputFile('https://chipbot.ru/images/special.jpg'),
             'caption' => '1 экран',
             'reply_markup' => $keyboard,
         ]);
